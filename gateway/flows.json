@@ -1,0 +1,2845 @@
+[
+    {
+        "id": "7574535dd22b1271",
+        "type": "tab",
+        "label": "Init",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "2b2532d4f671b8a5",
+        "type": "tab",
+        "label": "ReadWrite",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "6a64cb73d9f17246",
+        "type": "tab",
+        "label": "historian",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "b001e7bcff4690d6",
+        "type": "tab",
+        "label": "AlarmEvent",
+        "disabled": false,
+        "info": ""
+    },
+    {
+        "id": "8187cb28702fd891",
+        "type": "tab",
+        "label": "BiomasEvent",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "bff4c05cb8facc83",
+        "type": "tab",
+        "label": "Weighing",
+        "disabled": false,
+        "info": "",
+        "env": []
+    },
+    {
+        "id": "da21b235.dd463",
+        "type": "subflow",
+        "name": "Execute Shell Script",
+        "info": "",
+        "in": [
+            {
+                "x": 100,
+                "y": 200,
+                "wires": [
+                    {
+                        "id": "ef02ec37.0112b"
+                    }
+                ]
+            }
+        ],
+        "out": [
+            {
+                "x": 960,
+                "y": 280,
+                "wires": [
+                    {
+                        "id": "b89196b0.92e9d8",
+                        "port": 0
+                    }
+                ]
+            },
+            {
+                "x": 960,
+                "y": 340,
+                "wires": [
+                    {
+                        "id": "b89196b0.92e9d8",
+                        "port": 1
+                    }
+                ]
+            },
+            {
+                "x": 960,
+                "y": 400,
+                "wires": [
+                    {
+                        "id": "b89196b0.92e9d8",
+                        "port": 2
+                    }
+                ]
+            }
+        ]
+    },
+    {
+        "id": "0fd208e8367f3fa7",
+        "type": "FINS Connection",
+        "name": "BiomasPLC",
+        "host": "192.168.1.10",
+        "port": "9600",
+        "MODE": "",
+        "MODEType": "CS",
+        "protocol": "",
+        "protocolType": "tcp",
+        "ICF": "128",
+        "DNA": "",
+        "DA1": "",
+        "DA2": "",
+        "SNA": "",
+        "SA1": "",
+        "SA2": "",
+        "autoConnect": true
+    },
+    {
+        "id": "bfa28f3045a482a9",
+        "type": "mongodb",
+        "hostname": "localhost:27017",
+        "topology": "replicaset",
+        "connectOptions": "replicaSet=rs0",
+        "port": "27017",
+        "db": "meteor",
+        "name": "prodDbs"
+    },
+    {
+        "id": "7bad39ea.cf2628",
+        "type": "file",
+        "z": "da21b235.dd463",
+        "name": "Write script file",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "false",
+        "x": 860,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "282a9055.c22fb",
+        "type": "exec",
+        "z": "da21b235.dd463",
+        "command": "mktemp",
+        "addpay": false,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "",
+        "x": 420,
+        "y": 200,
+        "wires": [
+            [
+                "8224c095.11aa6"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "c89ecb36.69f7b8",
+        "type": "file",
+        "z": "da21b235.dd463",
+        "name": "Delete script file",
+        "filename": "",
+        "appendNewline": true,
+        "createDir": false,
+        "overwriteFile": "delete",
+        "x": 1020,
+        "y": 480,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b89196b0.92e9d8",
+        "type": "exec",
+        "z": "da21b235.dd463",
+        "command": " sh ",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "Execute the shell script",
+        "x": 690,
+        "y": 340,
+        "wires": [
+            [
+                "c89ecb36.69f7b8"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "4ceb0a7a.7bf494",
+        "type": "exec",
+        "z": "da21b235.dd463",
+        "command": "chmod +x ",
+        "addpay": true,
+        "append": "",
+        "useSpawn": "",
+        "timer": "",
+        "name": "",
+        "x": 1040,
+        "y": 200,
+        "wires": [
+            [
+                "bfca5c35.42f7f"
+            ],
+            [],
+            []
+        ]
+    },
+    {
+        "id": "ef02ec37.0112b",
+        "type": "change",
+        "z": "da21b235.dd463",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "command",
+                "pt": "msg",
+                "to": "payload",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 230,
+        "y": 200,
+        "wires": [
+            [
+                "282a9055.c22fb"
+            ]
+        ]
+    },
+    {
+        "id": "276faf09.e4c16",
+        "type": "change",
+        "z": "da21b235.dd463",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 860,
+        "y": 200,
+        "wires": [
+            [
+                "4ceb0a7a.7bf494"
+            ]
+        ]
+    },
+    {
+        "id": "8224c095.11aa6",
+        "type": "function",
+        "z": "da21b235.dd463",
+        "name": "",
+        "func": "msg.filename = msg.payload.trim();\nmsg.payload = msg.command;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 590,
+        "y": 180,
+        "wires": [
+            [
+                "7bad39ea.cf2628",
+                "276faf09.e4c16"
+            ]
+        ]
+    },
+    {
+        "id": "bfca5c35.42f7f",
+        "type": "change",
+        "z": "da21b235.dd463",
+        "name": "",
+        "rules": [
+            {
+                "t": "set",
+                "p": "payload",
+                "pt": "msg",
+                "to": "filename",
+                "tot": "msg"
+            }
+        ],
+        "action": "",
+        "property": "",
+        "from": "",
+        "to": "",
+        "reg": false,
+        "x": 480,
+        "y": 340,
+        "wires": [
+            [
+                "b89196b0.92e9d8"
+            ]
+        ]
+    },
+    {
+        "id": "baad910e.cb795",
+        "type": "comment",
+        "z": "da21b235.dd463",
+        "name": "Execute shell script",
+        "info": "Execute the shell script in msg.payload.",
+        "x": 130,
+        "y": 40,
+        "wires": []
+    },
+    {
+        "id": "bff9c980a252b262",
+        "type": "inject",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "20",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 110,
+        "y": 420,
+        "wires": [
+            [
+                "cddbba958e1fc18e"
+            ]
+        ]
+    },
+    {
+        "id": "e56b536a42747ed4",
+        "type": "inject",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "Started!",
+                "vt": "str"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": true,
+        "onceDelay": "0.5",
+        "topic": "",
+        "payload": "Started!",
+        "payloadType": "str",
+        "x": 140,
+        "y": 140,
+        "wires": [
+            [
+                "8b75cd0b1a8e04b4",
+                "bb7a16d2effeddd0"
+            ]
+        ]
+    },
+    {
+        "id": "8b75cd0b1a8e04b4",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "Init",
+        "func": "context.global.channelInit      = [];\ncontext.global.modbusTimeout    = 0;\ncontext.global.modbusTimeout    = 0;\ncontext.global.numberOfChannel  = 3;\ncontext.global.numberOfSite     = 0;\ncontext.global.numberOfMBEblock = 0;\ncontext.global.numberOfTagsDatabase = 0;\n\ncontext.global.MBEInit = [];\ncontext.global.TagsDatabase     = [];\ncontext.global.AlarmEvent       = [];\ncontext.global.AlarmEventStart  = [];\ncontext.global.AlarmEventEnd    = [];\ncontext.global.AlarmEventCheck  = [];\n\ncontext.global.timeHistorianInterval = 5;\n\ncontext.global.mySite   = [];\ncontext.global.myPLC    = null;\ncontext.global.startUp  = 0;\ncontext.global.screen   = [];\ncontext.global.site     = [];\n\ncontext.global.BEventStart = [];\ncontext.global.BEventEnd = [];\ncontext.global.BEventCheck = [];\n\nmsg.payload = { site: { $in: [\"Ai73SWbFDLPAMeXh7\"]}};\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 300,
+        "wires": [
+            [
+                "606226972d718f02"
+            ]
+        ]
+    },
+    {
+        "id": "999c6f545d82dea9",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "CreatePLC",
+        "func": "delete msg.iState;\nif (msg.payload.length>0)\n{\n    context.global.startUp = 0;\n    context.global.numberOfMBEblock = 0;    \n    context.global.myPLC = new Array(msg.payload.length);\n    context.global.plc = msg.payload;\n    context.global.MBEInit = new Array(msg.payload.length);\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 650,
+        "y": 300,
+        "wires": [
+            [
+                "0fbd47d8a6ca98a7"
+            ]
+        ]
+    },
+    {
+        "id": "0fbd47d8a6ca98a7",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 840,
+        "y": 300,
+        "wires": [
+            [
+                "3dad732b2dba452a",
+                "064e3092c8a4c297"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "3dad732b2dba452a",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "payload ",
+        "func": "msg.topic   = msg.payload.name;\nmsg.site    = msg.payload.site;\nmsg.plc     = msg.payload._id;\nmsg.payload  = {'selectPLC':msg.payload._id};\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1020,
+        "y": 300,
+        "wires": [
+            [
+                "349d1a30e6b8e12e"
+            ]
+        ]
+    },
+    {
+        "id": "20ebfde7ef56c26b",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "TagManager",
+        "func": "if (msg.payload.length>0)\n{\n    context.global.myPLC[msg.iState.index-1] = new Array(msg.payload.length + 4);\n    context.global.myPLC[msg.iState.index-1][0] = msg.topic;\n    context.global.myPLC[msg.iState.index-1][1] = msg.plc;\n    context.global.myPLC[msg.iState.index-1][2] = 0; //PLC Timeout\n    context.global.myPLC[msg.iState.index-1][3] = msg.site;\n    \n    context.global.MBEInit[msg.iState.index-1]  = new Array(msg.payload.length + 2);\n    context.global.MBEInit[msg.iState.index-1][0] = msg.topic;\n    context.global.MBEInit[msg.iState.index-1][1] = msg.site;\n    \n    for (var i=0; i <msg.payload.length; i++) {\n        context.global.myPLC[msg.iState.index-1][i+4] = msg.payload[i].datablock.toString();\n        context.global.MBEInit[msg.iState.index-1][i+2]=msg.payload[i];\n    }\n    context.global.numberOfMBEblock  = context.global.numberOfMBEblock + msg.payload.length;//context.global.MBEInit.length;\n    msg.payload =  context.global.numberOfMBEblock;\n    return msg; \n} else {\n    context.global.myPLC[msg.iState.index-1] = new Array(4);\n    context.global.myPLC[msg.iState.index-1][0] = msg.topic;\n    context.global.myPLC[msg.iState.index-1][1] = msg.plc;\n    context.global.myPLC[msg.iState.index-1][2] = 0; //PLC Timeout\n    context.global.myPLC[msg.iState.index-1][3] = msg.site;  \n\n    context.global.MBEInit[msg.iState.index-1]  = new Array(2);\n    context.global.MBEInit[msg.iState.index-1][0] = msg.topic;\n    context.global.MBEInit[msg.iState.index-1][1] = msg.site;    \n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1330,
+        "y": 300,
+        "wires": [
+            [
+                "10f5ca815780bd62"
+            ]
+        ]
+    },
+    {
+        "id": "ac034123fad3fb3e",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "createHist",
+        "func": "var dbValue = msg.payload;\ncontext.global.numberOfTagsHistorian = dbValue.length;\n\nif (context.global.numberOfTagsHistorian>0)\n{\n    for ( var i=0; i< context.global.numberOfTagsHistorian ; i++) {\n        context.global.TagsHistorian[i]=dbValue[i];\n    }   \n    //msg.payload = context.global.TagsHistorian;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 640,
+        "y": 180,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "90678d2f2fe85d88",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "payload ",
+        "func": "delete msg.iState;\nvar newPayload = [];\nvar active = 0;\nif ((context.global.numberOfMBEblock >0) && (context.global.startUp < context.global.numberOfMBEblock-3))\n{\n    for ( var i=0; i< context.global.myPLC.length ; i++) {\n        if ( context.global.myPLC[i]===null)\n        {\n            //Nothing\n        }\n        else\n        {\n            for ( var j=4; j< context.global.myPLC[i].length ; j++) {\n                if (context.global.myPLC[i][j].length > 2)\n                {\n                    //\n                }\n                else {\n                    newPayload.push({'selectPLC':context.global.myPLC[i][1],dataBlock:context.global.myPLC[i][j].toString()});\n                    active = 1;\n                }\n            }  \n        }\n    }   \n    if (active ==1) {\n        msg.payload = newPayload;\n        return msg;\n    }\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 480,
+        "wires": [
+            [
+                "0185249258a7c942",
+                "0741af2cd30fe314"
+            ]
+        ]
+    },
+    {
+        "id": "60be6d313604e313",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "GetTagBlock",
+        "func": "if (msg.payload.length>0)\n{\n    for ( var i=0; i< context.global.myPLC.length ; i++) {\n        if (context.global.myPLC[i][1]===msg.iState.inArray[msg.iState.index-1].selectPLC)\n        {\n            \n            for ( var j=4; j< context.global.myPLC[i].length ; j++) {\n                if (context.global.myPLC[i][j]===msg.iState.inArray[msg.iState.index-1].dataBlock)     \n                {\n                    context.global.startUp = context.global.startUp + 1;\n                    context.global.myPLC[i][j] = new Array (msg.payload.length+1);\n                    context.global.myPLC[i][j][0] = msg.iState.inArray[msg.iState.index-1].dataBlock;\n                    for ( var k=1; k< msg.payload.length+1 ; k++) {\n                        context.global.myPLC[i][j][k]=msg.payload[k-1];\n                    }          \n                    \n                }\n            }             \n            \n        }      \n    }   \n    //msg.payload =  msg.iState.index;//context.global.startUp;\n    msg.startUp =  context.global.startUp;\n    msg.payload = context.global.myPLC;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1230,
+        "y": 480,
+        "wires": [
+            [
+                "60a255a5fd6613e2"
+            ]
+        ]
+    },
+    {
+        "id": "93a2c930af4be58f",
+        "type": "mongodb in",
+        "z": "7574535dd22b1271",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "taginterfaces",
+        "collection": "taginterfaces",
+        "operation": "find",
+        "x": 1050,
+        "y": 480,
+        "wires": [
+            [
+                "60be6d313604e313"
+            ]
+        ]
+    },
+    {
+        "id": "fde9ea1f34ceab41",
+        "type": "switch",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "property": "payload",
+        "propertyType": "msg",
+        "rules": [
+            {
+                "t": "empty"
+            },
+            {
+                "t": "nempty"
+            }
+        ],
+        "checkall": "true",
+        "repair": false,
+        "outputs": 2,
+        "x": 338,
+        "y": 501,
+        "wires": [
+            [
+                "52d95df25c6b07e4"
+            ],
+            [
+                "c868ecb3670af3a3"
+            ]
+        ],
+        "outputLabels": [
+            "1",
+            "2"
+        ]
+    },
+    {
+        "id": "52d95df25c6b07e4",
+        "type": "delay",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 120,
+        "y": 300,
+        "wires": [
+            [
+                "8b75cd0b1a8e04b4",
+                "bb7a16d2effeddd0"
+            ]
+        ]
+    },
+    {
+        "id": "c868ecb3670af3a3",
+        "type": "delay",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "pauseType": "delay",
+        "timeout": "5",
+        "timeoutUnits": "seconds",
+        "rate": "1",
+        "nbRateUnits": "1",
+        "rateUnits": "second",
+        "randomFirst": "1",
+        "randomLast": "5",
+        "randomUnits": "seconds",
+        "drop": false,
+        "outputs": 1,
+        "x": 477,
+        "y": 540,
+        "wires": [
+            [
+                "90678d2f2fe85d88",
+                "937803cfb075d676"
+            ]
+        ]
+    },
+    {
+        "id": "bf1a600f01057958",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "createPLC",
+        "func": "delete msg.iState;\nif (msg.payload.length>0)\n{\n    context.global.plc = msg.payload;\n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "x": 670,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "064e3092c8a4c297",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 830,
+        "y": 220,
+        "wires": [
+            [
+                "0fbd47d8a6ca98a7"
+            ]
+        ]
+    },
+    {
+        "id": "0185249258a7c942",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 860,
+        "y": 480,
+        "wires": [
+            [
+                "f08e6e03f4ee131d",
+                "93a2c930af4be58f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "f08e6e03f4ee131d",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 850,
+        "y": 400,
+        "wires": [
+            [
+                "0185249258a7c942"
+            ]
+        ]
+    },
+    {
+        "id": "937803cfb075d676",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "payload ",
+        "func": "delete msg.iState;\nmsg.numberOfMBEblock = context.global.numberOfMBEblock;\nmsg.startUp = context.global.startUp;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 660,
+        "y": 560,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "10f5ca815780bd62",
+        "type": "debug",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "x": 1530,
+        "y": 300,
+        "wires": []
+    },
+    {
+        "id": "60a255a5fd6613e2",
+        "type": "debug",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1390,
+        "y": 480,
+        "wires": []
+    },
+    {
+        "id": "bb7a16d2effeddd0",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "Init",
+        "func": "context.global.TagsHistorian = [];\ncontext.global.numberOfTagsHistorian = 0;\ncontext.global.plc = [];\ncontext.global.synTimeout = 300000\nmsg.payload = { site: { $in: [\"Ai73SWbFDLPAMeXh7\"]}};\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 100,
+        "wires": [
+            [
+                "9704dfe00ef0d86e",
+                "d61931c2cb4b6ec3"
+            ]
+        ]
+    },
+    {
+        "id": "0741af2cd30fe314",
+        "type": "debug",
+        "z": "7574535dd22b1271",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 840,
+        "y": 560,
+        "wires": []
+    },
+    {
+        "id": "cddbba958e1fc18e",
+        "type": "function",
+        "z": "7574535dd22b1271",
+        "name": "Init",
+        "func": "msg.payload = context.global.myPLC\n\n\nreturn msg;\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 210,
+        "y": 500,
+        "wires": [
+            [
+                "fde9ea1f34ceab41"
+            ]
+        ]
+    },
+    {
+        "id": "d61931c2cb4b6ec3",
+        "type": "mongodb in",
+        "z": "7574535dd22b1271",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "plc",
+        "collection": "plcinterfaces",
+        "operation": "find",
+        "x": 470,
+        "y": 100,
+        "wires": [
+            [
+                "bf1a600f01057958"
+            ]
+        ]
+    },
+    {
+        "id": "9704dfe00ef0d86e",
+        "type": "mongodb in",
+        "z": "7574535dd22b1271",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "taghist",
+        "collection": "taghistorian",
+        "operation": "find",
+        "x": 470,
+        "y": 180,
+        "wires": [
+            [
+                "ac034123fad3fb3e"
+            ]
+        ]
+    },
+    {
+        "id": "606226972d718f02",
+        "type": "mongodb in",
+        "z": "7574535dd22b1271",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "plc",
+        "collection": "plcinterfaces",
+        "operation": "find",
+        "x": 470,
+        "y": 300,
+        "wires": [
+            [
+                "999c6f545d82dea9"
+            ]
+        ]
+    },
+    {
+        "id": "349d1a30e6b8e12e",
+        "type": "mongodb in",
+        "z": "7574535dd22b1271",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "mbe",
+        "collection": "modbusinterfaces",
+        "operation": "find",
+        "x": 1170,
+        "y": 300,
+        "wires": [
+            [
+                "20ebfde7ef56c26b"
+            ]
+        ]
+    },
+    {
+        "id": "ad66054565026fb4",
+        "type": "inject",
+        "z": "2b2532d4f671b8a5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 180,
+        "wires": [
+            [
+                "efba5397ab88f1ba"
+            ]
+        ]
+    },
+    {
+        "id": "efba5397ab88f1ba",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "checkTimeSync",
+        "func": "delete msg.iState;\n\nvar newquery = [];\nvar currentTime = new Date();\ncurrentTime = currentTime.getTime();\n\nfor (var i = 0; i < context.global.myPLC.length; i++) {\n    for (var j = 4; j < context.global.myPLC[i].length; j++) {\n        if (context.global.myPLC[i][j].length > 0) {\n            for (var k = 1; k < context.global.myPLC[i][j].length; k++) {\n                if (context.global.myPLC[i][j][k].status === \"bad\")\n                {\n                    //Nothing\n                } else\n                {\n                    if ((Number(currentTime) - Number(context.global.myPLC[i][j][k].createDate)) > context.global.synTimeout ) {\n                        newquery.push(context.global.myPLC[i][j][k]._id);\n                    }\n                }\n            }\n        }\n    }\n}\n\n\nif (newquery.length > 0) {\n    msg.payload = newquery\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 340,
+        "y": 180,
+        "wires": [
+            [
+                "99b14cc1efcc74a3",
+                "503012494aaafaac"
+            ]
+        ]
+    },
+    {
+        "id": "e98433cf03f5f20c",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 570,
+        "y": 80,
+        "wires": [
+            [
+                "99b14cc1efcc74a3"
+            ]
+        ]
+    },
+    {
+        "id": "99b14cc1efcc74a3",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 560,
+        "y": 180,
+        "wires": [
+            [
+                "e98433cf03f5f20c",
+                "bf97dc0c1c937383"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bf97dc0c1c937383",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "queryRecord",
+        "func": "delete msg.iState;\nmsg.query = { _id: msg.payload};\nmsg.payload =  {\"$set\": {\n                         \"status\": \"bad\"\n                        }\n               };\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 750,
+        "y": 180,
+        "wires": [
+            [
+                "508070d4969004e3",
+                "4418abac29e00255"
+            ]
+        ]
+    },
+    {
+        "id": "e2bd9bc4f259b342",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 360,
+        "wires": [
+            [
+                "ee19069db7de4cce"
+            ]
+        ]
+    },
+    {
+        "id": "ee19069db7de4cce",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 500,
+        "y": 440,
+        "wires": [
+            [
+                "e2bd9bc4f259b342",
+                "4c010e8e008e50f1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "4c010e8e008e50f1",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "readCMD",
+        "func": "delete msg.iState;\nvar newPayload = [];\n\nconst result =  context.global.plc.filter(function(plc) {\n    return plc._id==msg.plc;\n});\nvar address = \"D\";\nif (result!==null)\n{    \n    msg.site     = msg.payload.site;\n    msg.plc      = msg.payload.mbe.selectPLC;\n    msg.datablock= msg.payload.mbe.datablock;\n    msg.addressVar = parseInt(msg.payload.mbe.startaddress) - 40000\n    msg.address = address.concat(msg.addressVar);\n    msg.length   = parseInt(msg.payload.mbe.quantity)\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 660,
+        "y": 440,
+        "wires": [
+            [
+                "cf3d5631e56ab92e"
+            ]
+        ]
+    },
+    {
+        "id": "a9fc42dd7e040ea5",
+        "type": "inject",
+        "z": "2b2532d4f671b8a5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "2",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 440,
+        "wires": [
+            [
+                "21ae531b33906d3d"
+            ]
+        ]
+    },
+    {
+        "id": "21ae531b33906d3d",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "payload ",
+        "func": "delete msg.iState;\nvar payload     = 0;\nvar newPayload \t= [];\nvar newsite \t= [];\n\nif (context.global.MBEInit.length>0)\n{\n    for (var i = 0; i < context.global.MBEInit.length; i++)\n    {\n        if ( context.global.MBEInit[i]===null)\n        {\n            //Nothing\n        }\n        else\n        {\n            if (context.global.MBEInit[i].length>2)\n            {\n                for (var k = 2; k < context.global.MBEInit[i].length; k++)\n                {\n                    newPayload.push({mbe: context.global.MBEInit[i][k], site: context.global.MBEInit[i][1]});\n\n                    payload = 1;\n                }\n            }\n        }\n    }\n}\nif (payload > 0)\n{\n\tmsg.payload = newPayload;    \n    return msg;\n}\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 440,
+        "wires": [
+            [
+                "ee19069db7de4cce"
+            ]
+        ]
+    },
+    {
+        "id": "7fb8e3da6538455b",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1230,
+        "y": 360,
+        "wires": [
+            [
+                "b31b680332171312"
+            ]
+        ]
+    },
+    {
+        "id": "b31b680332171312",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1240,
+        "y": 440,
+        "wires": [
+            [
+                "7fb8e3da6538455b",
+                "9fb76537ae86ef88"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "6954637316f6bd2a",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "updateTag",
+        "func": "delete msg.iState;\n//var modbusValue = msg.payload;\n\nlet buffer = Buffer.from(msg.payload)\nbuffer.swap16()   // change endianness\nvar modbusValue = new Uint16Array(buffer.buffer, buffer.byteOffset, buffer.length / 2)\n\n\nvar newPayload = [];\nvar newquery = [];\nvar newModbus = [];\nvar synTimeout = 0;\n\nvar highval = 0;\nvar lowval = 0\nvar realVal = 0;\nvar boolVal = 0;\nvar offsetAdrr = 0;\nvar CTDEM = 0;\nvar CTM = 0;\nvar CTMJ = 0;\nvar words = []\n\n// Create a buffer\nvar buf = new ArrayBuffer(4);\n// Create a 16-bit int view of it\nvar ints = new Uint16Array(buf);\nvar currentTime = new Date();\ncurrentTime = Number(currentTime.getTime());\nvar update = 0;\n\nvar arrayAlarmVSD = [2, 4, 8];\nvar arrayAlarmValve = [2, 4, 8];\nvar arrayAlarmWEI = [2, 4, 8, 256]\nvar arrayAlarmVSDConnect = [1, 2, 4, 8, 16, 32, 64, 128, 256, 512, 1024, 2048, 4096, 8192, 16384, 32768]\n\nvar faultbit = 0;\nvar fault = 0;\nvar name = 0;\nvar value = 0;\n\nfor (var i = 0; i < context.global.myPLC.length; i++) {\n\tif (context.global.myPLC[i][1] === msg.plc) {\n\t\t//Them hearbeat cho moi PLC\n\t\tcontext.global.myPLC[i][2] = 0;\n\t\tupdate = 0;\n\t\tfor (var j = 4; j < context.global.myPLC[i].length; j++) {\n\t\t\tif ((parseInt(context.global.myPLC[i][j][0]) === parseInt(msg.datablock)) &&\n\t\t\t\t(context.global.myPLC[i][j].length > 0)) {\n\t\t\t\tfor (var k = 1; k < context.global.myPLC[i][j].length; k++) {\n\t\t\t\t\tif (context.global.myPLC[i][j][k].typeObject === \"Bool\") {\n\t\t\t\t\t\twords = context.global.myPLC[i][j][k].addressModbus.split(\".\");\n\t\t\t\t\t\toffsetAdrr = parseInt(words[0]) - parseInt(msg.addressVar) - 40000;\n\t\t\t\t\t}\n\t\t\t\t\telse {\n\t\t\t\t\t\toffsetAdrr = parseInt(context.global.myPLC[i][j][k].addressModbus) - parseInt(msg.addressVar) - 40000;\n\t\t\t\t\t}\n\t\t\t\t\tsynTimeout = parseInt(Number(currentTime) - parseInt(context.global.myPLC[i][j][k].createDate));\n\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeData) {\n\t\t\t\t\t\tcase \"Weighing\":\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 1];\n\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\tif (\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.VALUE[0]) === parseInt(realVal)) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT[0]) === parseInt(modbusValue[offsetAdrr + 7])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = parseInt(realVal)\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 7])\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.MATERIAL[0] = parseInt(modbusValue[offsetAdrr + 9])\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.BOILER[0] = parseInt(modbusValue[offsetAdrr + 10])\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\tfault = (context.global.myPLC[i][j][k].attribute.ETAT[0] & 2048) ? 2048 : 0;\n\t\t\t\t\t\t\tfaultbit = (context.global.myPLC[i][j][k].attribute.ETAT[1] & 2048) ? 2048 : 0;\n\n\t\t\t\t\t\t\tif ((fault === 2048) && (faultbit === 0)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] | 2048\n\t\t\t\t\t\t\t\tcontext.global.BEventStart.push({\n\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\tvalueS: context.global.myPLC[i][j][k].attribute.VALUE[0],\n\t\t\t\t\t\t\t\t\tvalueE: 0,\n\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\talarm: \"LoaderSensor\",\n\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\tmaterial: context.global.myPLC[i][j][k].attribute.MATERIAL[0],\n\t\t\t\t\t\t\t\t\tboiler: context.global.myPLC[i][j][k].attribute.BOILER[0],\n\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t} else if ((fault === 0) && (faultbit === 2048)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - 2048);\n\t\t\t\t\t\t\t\tcontext.global.BEventEnd.push({\n\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tvalueE: context.global.myPLC[i][j][k].attribute.VALUE[0],\n\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t} else if ((fault === 2048) && (faultbit === 2048)) {\n\t\t\t\t\t\t\t\tcontext.global.BEventCheck.push({\n\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\tfor (var km = 0; km < arrayAlarmWEI.length; km++) {\n\t\t\t\t\t\t\t\tfault = (context.global.myPLC[i][j][k].attribute.ETAT[0] & arrayAlarmWEI[km]) ? arrayAlarmWEI[km] : 0;\n\t\t\t\t\t\t\t\tfaultbit = (context.global.myPLC[i][j][k].attribute.ETAT[1] & arrayAlarmWEI[km]) ? arrayAlarmWEI[km] : 0;\n\n\t\t\t\t\t\t\t\tif ((fault === arrayAlarmWEI[km]) && (faultbit === 0)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] | arrayAlarmWEI[km]\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\talarm: \"Weighing\",\n\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((fault === 0) && (faultbit === arrayAlarmWEI[km])) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - arrayAlarmWEI[km]);\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\talarm: \"Weighing\",\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((fault === arrayAlarmWEI[km]) && (faultbit === arrayAlarmWEI[km])) {\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventCheck.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\talarm: \"Weighing\",\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Alarm\":\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\tfor (var km = 0; km < arrayAlarmVSDConnect.length; km++) {\n\t\t\t\t\t\t\t\tfault = (context.global.myPLC[i][j][k].attribute.VALUE[0] & arrayAlarmVSDConnect[km]) ? arrayAlarmVSDConnect[km] : 0;\n\t\t\t\t\t\t\t\tfaultbit = (context.global.myPLC[i][j][k].attribute.VALUE[1] & arrayAlarmVSDConnect[km]) ? arrayAlarmVSDConnect[km] : 0;\n\n\t\t\t\t\t\t\t\tif ((fault === arrayAlarmVSDConnect[km]) && (faultbit === 0)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[1] = context.global.myPLC[i][j][k].attribute.VALUE[1] | arrayAlarmVSDConnect[km]\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\talarm: \"VSDConnect\",\n\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((fault === 0) && (faultbit === arrayAlarmVSDConnect[km])) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[1] = context.global.myPLC[i][j][k].attribute.VALUE[1] & (0xFFFF - arrayAlarmVSDConnect[km]);\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\talarm: \"VSDConnect\",\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((fault === arrayAlarmVSDConnect[km]) && (faultbit === arrayAlarmVSDConnect[km])) {\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventCheck.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\talarm: \"VSDConnect\",\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Number\":\n\t\t\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeObject) {\n\t\t\t\t\t\t\t\tcase \"Bool\":\n\t\t\t\t\t\t\t\t\tx = Math.pow(2, words[1]);\n\t\t\t\t\t\t\t\t\tif ((parseInt(modbusValue[offsetAdrr]) & x) == x) {\n\t\t\t\t\t\t\t\t\t\tboolVal = 1;\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\t\t\tboolVal = 0;\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != boolVal) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.REG[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.REG[0] = parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = boolVal;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"Integer\":\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = (modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"DoubleInteger\":\n\t\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != realVal) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = realVal;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"Real\":\n\n\t\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr];\n\t\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 1];\n\t\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != realVal) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = realVal;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tdefault: break;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Level\":\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"ELECTRIC\":\n\t\t\t\t\t\t\twords = context.global.myPLC[i][j][k].addressModbus.split(\".\");\n\t\t\t\t\t\t\tvar x = Math.pow(2, words[1]);\n\n\t\t\t\t\t\t\tif ((parseInt(modbusValue[offsetAdrr]) & x) == x) {\n\t\t\t\t\t\t\t\tboolVal = 1;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tboolVal = 0;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT[0] != boolVal) ||\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = boolVal;\n\t\t\t\t\t\t\t\t//context.global.myPLC[i][j][k].attribute.ETAT[1] = 0\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t}\n\n\n\t\t\t\t\t\t\tif (context.global.myPLC[i][j][k].typeObject === \"EStop\") {\n\t\t\t\t\t\t\t\tfault = boolVal\n\t\t\t\t\t\t\t\tfaultbit = (context.global.myPLC[i][j][k].attribute.ETAT[1] & parseInt(modbusValue[offsetAdrr])) ? parseInt(modbusValue[offsetAdrr]) : 0;\n\n\t\t\t\t\t\t\t\tif ((fault === 1) && (faultbit === 0)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] | parseInt(modbusValue[offsetAdrr])\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\ttype: \"EStop\",\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tbit: 0,\n\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\talarm: \"EStop\",\n\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t\tETAT: context.global.myPLC[i][j][k].attribute.ETAT[1]\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((fault === 0) && (faultbit === parseInt(modbusValue[offsetAdrr]))) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - parseInt(modbusValue[offsetAdrr]));\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t\tbit: 0,\n\t\t\t\t\t\t\t\t\t\talarm: \"EStop\",\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((fault === 1) && (faultbit === parseInt(modbusValue[offsetAdrr]))) {\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventCheck.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tbit: 0,\n\t\t\t\t\t\t\t\t\t\talarm: \"EStop\",\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"DOL\":\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\tCTDEM = highval + parseInt(modbusValue[offsetAdrr]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\tCTM = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\tCTMJ = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\n\t\t\t\t\t\t\tif ((parseInt(context.global.myPLC[i][j][k].attribute.ETAT_MODE[0]) === parseInt(modbusValue[offsetAdrr + 9])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0]) === parseInt(modbusValue[offsetAdrr + 10])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.TMS[0]) === parseInt(modbusValue[offsetAdrr + 8])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CMD[0]) === parseInt(modbusValue[offsetAdrr + 13])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTDEM[0]) === CTDEM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTM[0]) === CTM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTMJ[0]) === CTMJ) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT[0]) === parseInt(modbusValue[offsetAdrr + 6])) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTDEM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTMJ[0] = realVal;\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TMS[0] = parseInt(modbusValue[offsetAdrr + 8]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_MODE[0] = parseInt(modbusValue[offsetAdrr + 9]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] = parseInt(modbusValue[offsetAdrr + 10]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CMD[0] = parseInt(modbusValue[offsetAdrr + 13]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 6]);\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"VSD\":\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\tCTDEM = highval + parseInt(modbusValue[offsetAdrr]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\tCTM = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\tCTMJ = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\n\t\t\t\t\t\t\tif (\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT[0]) === parseInt(modbusValue[offsetAdrr + 6])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT_MODE[0]) === parseInt(modbusValue[offsetAdrr + 9])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0]) === parseInt(modbusValue[offsetAdrr + 10])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.FEEDBACK[0]) === parseInt(modbusValue[offsetAdrr + 11])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.FEEDBACK[1]) === parseInt(modbusValue[offsetAdrr + 12])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.TMS[0]) === parseInt(modbusValue[offsetAdrr + 8])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTDEM[0]) === CTDEM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTM[0]) === CTM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTMJ[0]) === CTMJ) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CMD[0]) === parseInt(modbusValue[offsetAdrr + 13])) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTDEM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTMJ[0] = realVal;\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TMS[0] = parseInt(modbusValue[offsetAdrr + 8]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_MODE[0] = parseInt(modbusValue[offsetAdrr + 9]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] = parseInt(modbusValue[offsetAdrr + 10]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[0] = parseInt(modbusValue[offsetAdrr + 11]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[1] = parseInt(modbusValue[offsetAdrr + 12]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CMD[0] = parseInt(modbusValue[offsetAdrr + 13]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 6]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t\tfor (var km = 0; km < arrayAlarmVSD.length; km++) {\n\t\t\t\t\t\t\t\t\tfault = (context.global.myPLC[i][j][k].attribute.ETAT[0] & arrayAlarmVSD[km]) ? arrayAlarmVSD[km] : 0;\n\t\t\t\t\t\t\t\t\tfaultbit = (context.global.myPLC[i][j][k].attribute.ETAT[1] & arrayAlarmVSD[km]) ? arrayAlarmVSD[km] : 0;\n\n\t\t\t\t\t\t\t\t\tif ((fault === arrayAlarmVSD[km]) && (faultbit === 0)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] | arrayAlarmVSD[km]\n\t\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\t\talarm: \"vsd\",\n\t\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t\t} else if ((fault === 0) && (faultbit === arrayAlarmVSD[km])) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - arrayAlarmVSD[km]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\t\talarm: \"vsd\",\n\t\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t\t} else if ((fault === arrayAlarmVSD[km]) && (faultbit === arrayAlarmVSD[km])) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventCheck.push({\n\t\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\t\talarm: \"vsd\",\n\t\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Valve\":\n\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT[0] === parseInt(modbusValue[offsetAdrr + 0])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.CMD[0] === parseInt(modbusValue[offsetAdrr + 1])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.TMS[0] === parseInt(modbusValue[offsetAdrr + 2])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.ETAT_MODE[0] === parseInt(modbusValue[offsetAdrr + 3])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] === parseInt(modbusValue[offsetAdrr + 4])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 0]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CMD[0] = parseInt(modbusValue[offsetAdrr + 1]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TMS[0] = parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_MODE[0] = parseInt(modbusValue[offsetAdrr + 3]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] = parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t\tfor (var km = 0; km < arrayAlarmValve.length; km++) {\n\t\t\t\t\t\t\t\t\tfault = (context.global.myPLC[i][j][k].attribute.ETAT[0] & arrayAlarmValve[km]) ? arrayAlarmValve[km] : 0;\n\t\t\t\t\t\t\t\t\tfaultbit = (context.global.myPLC[i][j][k].attribute.ETAT[1] & arrayAlarmValve[km]) ? arrayAlarmValve[km] : 0;\n\n\t\t\t\t\t\t\t\t\tif ((fault === arrayAlarmValve[km]) && (faultbit === 0)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] | arrayAlarmValve[km]\n\t\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\t\talarm: \"valve\",\n\t\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t\t} else if ((fault === 0) && (faultbit === arrayAlarmValve[km])) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - arrayAlarmValve[km]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\t\talarm: \"valve\",\n\t\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t\t} else if ((fault === arrayAlarmValve[km]) && (faultbit === arrayAlarmValve[km])) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventCheck.push({\n\t\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\t\tbit: km,\n\t\t\t\t\t\t\t\t\t\t\talarm: \"valve\",\n\t\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Instrument\":\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 1];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar hhv = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 2];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 3];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar hv = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 4];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 5];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar llv = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 6];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 7];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar lv = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\t// Create a buffer\n\t\t\t\t\t\t\t//var buf = new ArrayBuffer(4);\n\t\t\t\t\t\t\t// Create a 16-bit int view of it\n\t\t\t\t\t\t\t//var ints = new Uint16Array(buf);\n\t\t\t\t\t\t\t// Fill in the values\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 8];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 9];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar dataInstr = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tvar etat_ins = parseInt(modbusValue[offsetAdrr + 12]);\n\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] === dataInstr) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.HHV[0] === hhv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.HV[0] === hv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.LLV[0] === llv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.LV[0] === lv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.ETAT[0] === etat_ins) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//Nothing\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = dataInstr;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.HHV[0] = hhv;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.HV[0] = hv;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.LLV[0] = llv;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.LV[0] = lv;\n\n\t\t\t\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeObject) {\n\t\t\t\t\t\t\t\t\tcase \"FITInstrument\":\n\t\t\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 14];\n\t\t\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 15];\n\t\t\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(0);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TOTAL[0] = realVal;\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 16)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t\tdefault:\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 14)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 12]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tdefault: break;\n\t\t\t\t\t}\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t}\n}\n\nif (newPayload.length > 0) {\n\tmsg.query = newquery;\n\tmsg.payload = newPayload;\n\treturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 440,
+        "wires": [
+            [
+                "b31b680332171312",
+                "3446a33d7b29368f"
+            ]
+        ]
+    },
+    {
+        "id": "cf3d5631e56ab92e",
+        "type": "FINS Read",
+        "z": "2b2532d4f671b8a5",
+        "name": "",
+        "connection": "0fd208e8367f3fa7",
+        "addressType": "msg",
+        "address": "address",
+        "countType": "msg",
+        "count": "length",
+        "msgPropertyType": "msg",
+        "msgProperty": "payload",
+        "outputFormatType": "buffer",
+        "outputFormat": "buffer",
+        "x": 850,
+        "y": 440,
+        "wires": [
+            [
+                "6954637316f6bd2a"
+            ]
+        ]
+    },
+    {
+        "id": "4418abac29e00255",
+        "type": "mongodb out",
+        "z": "2b2532d4f671b8a5",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "updateTag",
+        "collection": "taginterfaces",
+        "payonly": false,
+        "upsert": false,
+        "multi": true,
+        "operation": "update",
+        "x": 990,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "9fb76537ae86ef88",
+        "type": "mongodb out",
+        "z": "2b2532d4f671b8a5",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "saveTag",
+        "collection": "taginterfaces",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 1420,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "df73c26e93b4d606",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "ClearCmd",
+        "func": "delete msg.iState;\nvar cmdValue = msg.payload;\nvar newPayload = [];\nvar newquery = [];\nvar currentTime = new Date();\ncurrentTime.setSeconds(0);\ncurrentTime = currentTime.getTime();\n\nif (cmdValue.length>0)\n{\n    for ( var i=0; i<cmdValue.length; i=i+1) {\n        cmdValue[i].actions = 0;\n        cmdValue[i].createdAt = currentTime;\n    \tnewquery.push({_id :  cmdValue[i]._id});\n    \tnewPayload.push(cmdValue[i]);\n    }\n    msg.query  = newquery;\n    msg.payload = newPayload;\n    return msg;\n}\n//",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 460,
+        "y": 820,
+        "wires": [
+            [
+                "3c07dc2a730b67d2"
+            ]
+        ]
+    },
+    {
+        "id": "0f29d55c90b22025",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "delete msg.iState;",
+        "func": "delete msg.iState;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 870,
+        "y": 760,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "aad9531f537c77fb",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 730,
+        "y": 540,
+        "wires": [
+            [
+                "95559c7a6e4c0e8e"
+            ]
+        ]
+    },
+    {
+        "id": "95559c7a6e4c0e8e",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 740,
+        "y": 620,
+        "wires": [
+            [
+                "aad9531f537c77fb",
+                "0af3d57730fb0837"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "7e7093e15dd233ec",
+        "type": "inject",
+        "z": "2b2532d4f671b8a5",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 620,
+        "wires": [
+            [
+                "a57090ebac7be1af"
+            ]
+        ]
+    },
+    {
+        "id": "a57090ebac7be1af",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "cmdActive",
+        "func": "msg.payload = {actions:1}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 620,
+        "wires": [
+            [
+                "f639be8455406439"
+            ]
+        ]
+    },
+    {
+        "id": "9d68313bb4d40559",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "repeat",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 630,
+        "y": 740,
+        "wires": [
+            [
+                "3c07dc2a730b67d2"
+            ]
+        ]
+    },
+    {
+        "id": "3c07dc2a730b67d2",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "Iteration",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 640,
+        "y": 820,
+        "wires": [
+            [
+                "9d68313bb4d40559",
+                "0f29d55c90b22025",
+                "d2cc367633cd8752"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "bbf217c1a67c86fe",
+        "type": "FINS Write",
+        "z": "2b2532d4f671b8a5",
+        "name": "",
+        "connection": "0fd208e8367f3fa7",
+        "addressType": "msg",
+        "address": "address",
+        "dataType": "msg",
+        "data": "value",
+        "msgPropertyType": "msg",
+        "msgProperty": "payload",
+        "x": 1150,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f639be8455406439",
+        "type": "mongodb in",
+        "z": "2b2532d4f671b8a5",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "findCMD",
+        "collection": "cmdinterfaces",
+        "operation": "find",
+        "x": 540,
+        "y": 620,
+        "wires": [
+            [
+                "95559c7a6e4c0e8e",
+                "df73c26e93b4d606"
+            ]
+        ]
+    },
+    {
+        "id": "d2cc367633cd8752",
+        "type": "mongodb out",
+        "z": "2b2532d4f671b8a5",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "",
+        "collection": "cmdinterfaces",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 890,
+        "y": 820,
+        "wires": []
+    },
+    {
+        "id": "0af3d57730fb0837",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "PrepareData",
+        "func": "delete msg.iState;\nvar address = \"D\";\n\nmsg.address = address.concat(Number(msg.payload.address) - 40000);\nmsg.value = msg.payload.value\nmsg.typedata = msg.payload.typedata\n\n\nswitch (Number(msg.payload.typedata))\n{\n    case 0://Boolean\n    case 1://Integer\n        msg.value = msg.payload.value\n        break;\n    case 2://Double \n        msg.value = new Array();\n        msg.value[1] = Number(msg.payload.value) >> 16;\n        msg.value[0] = Number(msg.payload.value) & 0xFFFF;\n        break;        \n    case 3://Real\n        msg.value = new Array();\n        var f32 = new Float32Array(1);\n        f32[0]  = Number(msg.payload.value);\n        var ui16 = new Uint16Array(f32.buffer);                \n        msg.value[0] = ui16[1];\n        msg.value[1] = ui16[0];\n        break;\n   default:\n}\n\nreturn msg",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 950,
+        "y": 620,
+        "wires": [
+            [
+                "bbf217c1a67c86fe"
+            ]
+        ]
+    },
+    {
+        "id": "508070d4969004e3",
+        "type": "debug",
+        "z": "2b2532d4f671b8a5",
+        "name": "debug 5",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1000,
+        "y": 80,
+        "wires": []
+    },
+    {
+        "id": "503012494aaafaac",
+        "type": "debug",
+        "z": "2b2532d4f671b8a5",
+        "name": "debug 7",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 380,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "80895d403f1f6201",
+        "type": "function",
+        "z": "2b2532d4f671b8a5",
+        "name": "updateTag",
+        "func": "delete msg.iState;\n//var modbusValue = msg.payload;\n\nlet buffer = Buffer.from(msg.payload)\nbuffer.swap16()   // change endianness\nvar modbusValue = new Uint16Array(buffer.buffer, buffer.byteOffset, buffer.length / 2)\n\n\nvar newPayload = [];\nvar newquery = [];\nvar newModbus = [];\nvar synTimeout = 0;\n\nvar highval = 0;\nvar lowval = 0\nvar realVal = 0;\nvar boolVal = 0;\nvar offsetAdrr = 0;\nvar CTDEM = 0;\nvar CTM = 0;\nvar CTMJ = 0;\nvar words = []\n\n// Create a buffer\nvar buf = new ArrayBuffer(4);\n// Create a 16-bit int view of it\nvar ints = new Uint16Array(buf);\nvar update = 0;\nvar currentTime = new Date();\ncurrentTime = Number(currentTime.getTime());\n\n\nfor (var i = 0; i < context.global.myPLC.length; i++) {\n\tif (context.global.myPLC[i][1] === msg.plc) {\n\t\t//Them hearbeat cho moi PLC\n\t\tcontext.global.myPLC[i][2] = 0;\n\n\t\tfor (var j = 4; j < context.global.myPLC[i].length; j++) {\n\t\t\tif ((parseInt(context.global.myPLC[i][j][0]) === parseInt(msg.datablock)) &&\n\t\t\t\t(context.global.myPLC[i][j].length > 0)) {\n\t\t\t\tfor (var k = 1; k < context.global.myPLC[i][j].length; k++) {\n\t\t\t\t\tif (context.global.myPLC[i][j][k].typeObject === \"Bool\") {\n\t\t\t\t\t\twords = context.global.myPLC[i][j][k].addressModbus.split(\".\");\n\t\t\t\t\t\toffsetAdrr = parseInt(words[0]) - parseInt(msg.addressVar) - 40000;\n\t\t\t\t\t}\n\t\t\t\t\telse {\n\t\t\t\t\t\toffsetAdrr = parseInt(context.global.myPLC[i][j][k].addressModbus) - parseInt(msg.addressVar) - 40000;\n\t\t\t\t\t}\n\t\t\t\t\tsynTimeout = parseInt(Number(currentTime) - parseInt(context.global.myPLC[i][j][k].createDate));\n\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeData) {\n\t\t\t\t\t\tcase \"Number\":\n\t\t\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeObject) {\n\t\t\t\t\t\t\t\tcase \"Bool\":\n\t\t\t\t\t\t\t\t\tx = Math.pow(2, words[1]);\n\t\t\t\t\t\t\t\t\tif ((parseInt(modbusValue[offsetAdrr]) & x) == x) {\n\t\t\t\t\t\t\t\t\t\tboolVal = 1;\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\t\t\tboolVal = 0;\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != boolVal) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.REG[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.REG[0] = parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = boolVal;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 2)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"Integer\":\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = (modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 1)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"DoubleInteger\":\n\t\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != realVal) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = realVal;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 2)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"Real\":\n\n\t\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr];\n\t\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 1];\n\t\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] != realVal) ||\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = realVal;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 2)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tdefault: break;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Level\":\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT[0] != parseInt(modbusValue[offsetAdrr])) ||\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 1)\n\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"ELECTRIC\":\n\t\t\t\t\t\t\twords = context.global.myPLC[i][j][k].addressModbus.split(\".\");\n\t\t\t\t\t\t\tvar x = Math.pow(2, words[1]);\n\n\t\t\t\t\t\t\tif ((parseInt(modbusValue[offsetAdrr]) & x) == x) {\n\t\t\t\t\t\t\t\tboolVal = 1;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tboolVal = 0;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT[0] != boolVal) ||\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"bad\") ||\n\t\t\t\t\t\t\t\t(synTimeout > context.global.synTimeout)) {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = boolVal;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 1)\n\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"PID\":\n\t\t\t\t\t\t\tif (\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.KP[0] === parseInt(modbusValue[offsetAdrr + 0])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.TI[0] === parseInt(modbusValue[offsetAdrr + 1])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.TD[0] === parseInt(modbusValue[offsetAdrr + 2])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.PID_OP_MIN[0] === parseInt(modbusValue[offsetAdrr + 3])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.PID_OP_MAX[0] === parseInt(modbusValue[offsetAdrr + 4])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.PID_MODE[0] === parseInt(modbusValue[offsetAdrr + 5])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.PV_HMI[0] === parseInt(modbusValue[offsetAdrr + 6])) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//Nothing\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.KP[0] = parseInt(modbusValue[offsetAdrr + 0]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TI[0] = parseInt(modbusValue[offsetAdrr + 1]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TD[0] = parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.PID_OP_MIN[0] = parseInt(modbusValue[offsetAdrr + 3]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.PID_OP_MAX[0] = parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.PID_MODE[0] = parseInt(modbusValue[offsetAdrr + 5]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.PV_HMI[0] = parseInt(modbusValue[offsetAdrr + 6]);\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 6];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 7];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.PV_HMI[0] = realVal;\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 8];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 9];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.SP_HMI[0] = realVal;\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 10];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 11];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ERR[0] = realVal;\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 12];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 13];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ERR01[0] = realVal;\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 14];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 15];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.OPR[0] = realVal;\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 16];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 17];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.MIN_BAR[0] = realVal;\n\n\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 18];\n\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 19];\n\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.MAX_BAR[0] = realVal;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 20)\n\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"DOL\":\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\tCTDEM = highval + parseInt(modbusValue[offsetAdrr]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\tCTM = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\tCTMJ = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\n\t\t\t\t\t\t\tif ((parseInt(context.global.myPLC[i][j][k].attribute.ETAT_MODE[0]) === parseInt(modbusValue[offsetAdrr + 9])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0]) === parseInt(modbusValue[offsetAdrr + 10])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.TMS[0]) === parseInt(modbusValue[offsetAdrr + 8])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CMD[0]) === parseInt(modbusValue[offsetAdrr + 13])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTDEM[0]) === CTDEM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTM[0]) === CTM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTMJ[0]) === CTMJ) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT[0]) === parseInt(modbusValue[offsetAdrr + 6])) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTDEM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTMJ[0] = realVal;\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TMS[0] = parseInt(modbusValue[offsetAdrr + 8]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_MODE[0] = parseInt(modbusValue[offsetAdrr + 9]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] = parseInt(modbusValue[offsetAdrr + 10]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CMD[0] = parseInt(modbusValue[offsetAdrr + 13]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 6]);\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 14)\n\t\t\t\t\t\t\t\t});\n\n\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] === 3) && (context.global.myPLC[i][j][k].alarmEnable === false)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].alarmEnable = true;\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tetat: context.global.myPLC[i][j][k].attribute.ETAT[0],\n\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\tplc: context.global.myPLC[i][0],\n\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t\tarea: \"Caudo60K\"\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] === 0) && (context.global.myPLC[i][j][k].alarmEnable === true)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].alarmEnable = false;\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"VSD\":\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\tCTDEM = highval + parseInt(modbusValue[offsetAdrr]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\tCTM = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\n\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\tCTMJ = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\n\t\t\t\t\t\t\tif (\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT[0]) === parseInt(modbusValue[offsetAdrr + 6])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT_MODE[0]) === parseInt(modbusValue[offsetAdrr + 9])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0]) === parseInt(modbusValue[offsetAdrr + 10])) &&\n\t\t\t\t\t\t\t\t(Math.abs(parseInt(modbusValue[offsetAdrr + 11]) - parseInt(context.global.myPLC[i][j][k].attribute.FEEDBACK[0])) < 10) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.FEEDBACK[1]) === parseInt(modbusValue[offsetAdrr + 12])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.TMS[0]) === parseInt(modbusValue[offsetAdrr + 8])) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTDEM[0]) === CTDEM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTM[0]) === CTM) &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CTMJ[0]) === CTMJ) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(parseInt(context.global.myPLC[i][j][k].attribute.CMD[0]) === parseInt(modbusValue[offsetAdrr + 13])) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 1]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTDEM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 3]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTM[0] = realVal;\n\n\t\t\t\t\t\t\t\thighval = parseInt(modbusValue[offsetAdrr + 5]) << 16;\n\t\t\t\t\t\t\t\trealVal = highval + parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CTMJ[0] = realVal;\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TMS[0] = parseInt(modbusValue[offsetAdrr + 8]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_MODE[0] = parseInt(modbusValue[offsetAdrr + 9]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] = parseInt(modbusValue[offsetAdrr + 10]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[0] = parseInt(modbusValue[offsetAdrr + 11]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[1] = parseInt(modbusValue[offsetAdrr + 12]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CMD[0] = parseInt(modbusValue[offsetAdrr + 13]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 6]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 14)\n\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\tupdate = 1;\n\n\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] === 3) && (context.global.myPLC[i][j][k].alarmEnable === false)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].alarmEnable = true;\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tetat: context.global.myPLC[i][j][k].attribute.ETAT[0],\n\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\tplc: context.global.myPLC[i][0],\n\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t\tarea: \"Caudo60K\"\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] === 0) && (context.global.myPLC[i][j][k].alarmEnable === true)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].alarmEnable = false;\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Valve\":\n\t\t\t\t\t\t\tupdate = 0;\n\t\t\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeObject) {\n\t\t\t\t\t\t\t\tcase \"AnalogValve\":\n\t\t\t\t\t\t\t\tcase \"AnalogValve90\":\n\t\t\t\t\t\t\t\tcase \"AnalogGateValve\":\n\t\t\t\t\t\t\t\t\tif (context.global.myPLC[i][j][k].attribute.FEEDBACK[0] != parseInt(modbusValue[offsetAdrr + 9])) {\n\t\t\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[0] = parseInt(modbusValue[offsetAdrr + 9]);\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tcase \"AnalogValveControl\":\n\t\t\t\t\t\t\t\tcase \"AnalogValveControl02\":\n\t\t\t\t\t\t\t\tcase \"AnalogValveControl03\":\n\t\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.FEEDBACK[0] === parseInt(modbusValue[offsetAdrr + 9])) &&\n\t\t\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.FEEDBACK[1] === parseInt(modbusValue[offsetAdrr + 7]))) {\n\n\t\t\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[0] = parseInt(modbusValue[offsetAdrr + 9]);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FEEDBACK[1] = parseInt(modbusValue[offsetAdrr + 7]);\n\t\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\tdefault:\n\t\t\t\t\t\t\t\t\tupdate = 0;\n\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT[0] === parseInt(modbusValue[offsetAdrr + 0])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.CMD[0] === parseInt(modbusValue[offsetAdrr + 2])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.TMS[0] === parseInt(modbusValue[offsetAdrr + 3])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.ETAT_MODE[0] === parseInt(modbusValue[offsetAdrr + 4])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] === parseInt(modbusValue[offsetAdrr + 5])) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(update === 0) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeObject) {\n\t\t\t\t\t\t\t\t\tcase \"AnalogValve\":\n\t\t\t\t\t\t\t\t\tcase \"AnalogValve90\":\n\t\t\t\t\t\t\t\t\tcase \"AnalogGateValve\":\n\t\t\t\t\t\t\t\t\tcase \"AnalogValveControl\":\n\t\t\t\t\t\t\t\t\tcase \"AnalogValveControl02\":\n\t\t\t\t\t\t\t\t\tcase \"AnalogValveControl03\":\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 11)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t\tdefault:\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 6)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 0]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.CMD[0] = parseInt(modbusValue[offsetAdrr + 2]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TMS[0] = parseInt(modbusValue[offsetAdrr + 3]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_MODE[0] = parseInt(modbusValue[offsetAdrr + 4]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] = parseInt(modbusValue[offsetAdrr + 5]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\t\t\t\t\t\t\t\tupdate = 1;\n\n\t\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] > 2) && (context.global.myPLC[i][j][k].alarmEnable === false)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].alarmEnable = true;\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventStart.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\ttype: context.global.myPLC[i][j][k].typeData,\n\t\t\t\t\t\t\t\t\t\tname: context.global.myPLC[i][j][k].tagName,\n\t\t\t\t\t\t\t\t\t\tetat: context.global.myPLC[i][j][k].attribute.ETAT[0],\n\t\t\t\t\t\t\t\t\t\tstat: \"active\",\n\t\t\t\t\t\t\t\t\t\tplc: context.global.myPLC[i][0],\n\t\t\t\t\t\t\t\t\t\tsTime: currentTime,\n\t\t\t\t\t\t\t\t\t\teTime: 0,\n\t\t\t\t\t\t\t\t\t\tarea: \"Caudo60K\"\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t} else if ((context.global.myPLC[i][j][k].attribute.ETAT_RUNNING[0] <= 2) && (context.global.myPLC[i][j][k].alarmEnable === true)) {\n\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].alarmEnable = false;\n\t\t\t\t\t\t\t\t\tcontext.global.AlarmEventEnd.push({\n\t\t\t\t\t\t\t\t\t\tobjId: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\teTime: currentTime,\n\t\t\t\t\t\t\t\t\t})\n\t\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"Instrument\":\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 1];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar hhv = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 2];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 3];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar hv = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 4];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 5];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar llv = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 6];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 7];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar lv = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\t// Create a buffer\n\t\t\t\t\t\t\t//var buf = new ArrayBuffer(4);\n\t\t\t\t\t\t\t// Create a 16-bit int view of it\n\t\t\t\t\t\t\t//var ints = new Uint16Array(buf);\n\t\t\t\t\t\t\t// Fill in the values\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 8];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 9];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tvar dataInstr = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tvar etat_ins = parseInt(modbusValue[offsetAdrr + 12]);\n\n\t\t\t\t\t\t\tif ((context.global.myPLC[i][j][k].attribute.VALUE[0] === dataInstr) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.HHV[0] === hhv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.HV[0] === hv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.LLV[0] === llv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].status === \"good\") &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.LV[0] === lv) &&\n\t\t\t\t\t\t\t\t(context.global.myPLC[i][j][k].attribute.ETAT[0] === etat_ins) &&\n\t\t\t\t\t\t\t\t(synTimeout < context.global.synTimeout)) {\n\t\t\t\t\t\t\t\t//Nothing\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\telse {\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.VALUE[0] = dataInstr;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.HHV[0] = hhv;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.HV[0] = hv;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.LLV[0] = llv;\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.LV[0] = lv;\n\n\t\t\t\t\t\t\t\tswitch (context.global.myPLC[i][j][k].typeObject) {\n\t\t\t\t\t\t\t\t\tcase \"FITInstrument\":\n\t\t\t\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 14];\n\t\t\t\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 15];\n\t\t\t\t\t\t\t\t\t\trealVal = new Float32Array(buf)[0].toFixed(0);\n\t\t\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.TOTAL[0] = realVal;\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 16)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t\tdefault:\n\t\t\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 14)\n\t\t\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t\t}\n\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ETAT[0] = parseInt(modbusValue[offsetAdrr + 12]);\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\n\t\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\n\t\t\t\t\t\t\t\tupdate = 1;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tcase \"POWERMETER\":\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 1];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.P1[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 2];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 3];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.P2[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 4];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 5];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.P3[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 6];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 7];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.P_TOTAL[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 8];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 9];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.Q1[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 10];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 11];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.Q2[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 12];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 13];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.Q3[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 14];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 15];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.Q_TOTAL[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 16];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 17];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.S1[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 18];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 19];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.S2[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 20];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 21];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.S3[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 22];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 23];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.S_TOTAL[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 24];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 25];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.POWERFACTOR1[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 26];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 27];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.POWERFACTOR2[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 28];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 29];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.POWERFACTOR3[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 30];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 31];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.POWERFACTOR_AVG[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 32];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 33];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.I1[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 34];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 35];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.I2[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 36];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 37];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.I3[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 38];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 39];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.I_AVG[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 40];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 41];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.FREQ[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 42];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 43];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.U12[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 44];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 45];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.U23[0] = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 46];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 47];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.U31[0] = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 48];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 49];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.U_AVG[0] = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 50];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 51];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.V1[0] = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 52];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 53];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.V2[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 54];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 55];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.V3[0] = new Float32Array(buf)[0].toFixed(2);\n\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 56];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 57];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.V_AVG[0] = new Float32Array(buf)[0].toFixed(2);\n\n\t\t\t\t\t\t\tints[0] = modbusValue[offsetAdrr + 58];\n\t\t\t\t\t\t\tints[1] = modbusValue[offsetAdrr + 59];\n\t\t\t\t\t\t\t// Create a 32-bit float view of it\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].status = \"good\";\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].createDate = currentTime;\n\t\t\t\t\t\t\tcontext.global.myPLC[i][j][k].attribute.ENERGY[0] = new Float32Array(buf)[0].toFixed(2);\n\t\t\t\t\t\t\tnewquery.push({ _id: context.global.myPLC[i][j][k]._id });\n\t\t\t\t\t\t\tnewPayload.push(context.global.myPLC[i][j][k]);\n\n\t\t\t\t\t\t\tif (synTimeout > context.global.synTimeout) {\n\t\t\t\t\t\t\t\tnewModbus.push({\n\t\t\t\t\t\t\t\t\t_id: context.global.myPLC[i][j][k]._id,\n\t\t\t\t\t\t\t\t\tmbe: modbusValue.slice(offsetAdrr, offsetAdrr + 59)\n\t\t\t\t\t\t\t\t});\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\tdefault: break;\n\t\t\t\t\t}\n\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\n\t}\n}\n\nif (newPayload.length > 0) {\n\tmsg.query = newquery;\n\tmsg.payload = newPayload;\n\tmsg.modbus = newModbus;\n\treturn msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1030,
+        "y": 360,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "3446a33d7b29368f",
+        "type": "debug",
+        "z": "2b2532d4f671b8a5",
+        "name": "debug 13",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1260,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "3fe7d440a469dba3",
+        "type": "link in",
+        "z": "2b2532d4f671b8a5",
+        "name": "link in 1",
+        "links": [
+            "245f6ad64e3d468c"
+        ],
+        "x": 975,
+        "y": 560,
+        "wires": [
+            [
+                "bbf217c1a67c86fe"
+            ]
+        ]
+    },
+    {
+        "id": "d481592d6dfdb381",
+        "type": "inject",
+        "z": "6a64cb73d9f17246",
+        "name": "IntervalHistorian",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "60",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 100,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "0cb98963ea0c90b3",
+        "type": "mongodb out",
+        "z": "6a64cb73d9f17246",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "tagdatahistorian",
+        "collection": "tagdatahistorian",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 700,
+        "y": 100,
+        "wires": []
+    },
+    {
+        "id": "a45150c3e4ac3192",
+        "type": "function",
+        "z": "6a64cb73d9f17246",
+        "name": "FormatDataHistorian",
+        "func": "var newPayload  = [];\nvar currentTime = new Date()\ncurrentTime.setSeconds(0);\nvar getMinutes  = currentTime.getMinutes();\ncurrentTime     = currentTime.getTime();\n\nif ((getMinutes % context.global.timeHistorianInterval) !== 0)\n{\n\t//Nothing\n}\nelse\n{\n\tvar data \t= [];\n\tvar index \t= 0;\n\tvar ik \t\t= 0;\n\tvar i \t\t= 0;\n\tvar j \t\t= 0;\n\tvar k \t\t= 0;\n\tvar hist    = 0;\n\tvar value   = 0;\n\twhile (ik < context.global.TagsHistorian.length)  {\n\t\ti = 0;\n\t\thist = 0;\n\t\twhile ((i < context.global.myPLC.length) && (hist === 0)) {\n\t\t\tj = 4;\n\t\t\twhile ((j < context.global.myPLC[i].length) && (hist === 0)) {\n\t\t\t\tk = 1;\n\t\t\t\twhile ((k < context.global.myPLC[i][j].length) && (hist === 0)) {\n\t\t\t\t\tfor (var prop in context.global.myPLC[i][j][k].attribute) {\n\t\t\t\t\t\tif (context.global.myPLC[i][j][k].attribute.hasOwnProperty(prop)) {\n\t\t\t\t\t\t\tif (context.global.myPLC[i][j][k].status === \"bad\") {\n\t\t\t\t\t\t\t\tvalue = 0;\n\t\t\t\t\t\t\t} else {\n\t\t\t\t\t\t\t\tvalue = Number(context.global.myPLC[i][j][k].attribute[prop][0]);\n\t\t\t\t\t\t\t}\t\t\t\t\t\t\t\n\t\t\t\t\t\t\tvar name = context.global.myPLC[i][j][k].tagName + \".\" + prop;\n\t\t\t\t\t\t\tif (context.global.TagsHistorian[ik].assignmentTag === name) {\n\t\t\t\t\t\t\t\tdata[index] = {\n\t\t\t\t\t\t\t\t\tn: context.global.TagsHistorian[ik].uniqueID,\n\t\t\t\t\t\t\t\t\tv: Number(context.global.myPLC[i][j][k].attribute[prop][0]),\n\t\t\t\t\t\t\t\t};\n\t\t\t\t\t\t\t\tindex++;\n\t\t\t\t\t\t\t\thist = 1;\n\t\t\t\t\t\t\t\tbreak;\n\t\t\t\t\t\t\t}\n\t\t\t\t\t\t}\n\t\t\t\t\t}\n\t\t\t\t\tk++\n\t\t\t\t}\n\t\t\t\tj++\n\t\t\t}\n\t\t\ti++\n\t\t}\n\t\tik++\n\t}\n\n}\nif (index > 0)\n{\n   newPayload.push({\n        data: data,\n        timestamp: currentTime,\n        active: 1\n    });\n    msg.payload = newPayload;\n    return msg;\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 440,
+        "y": 100,
+        "wires": [
+            [
+                "0cb98963ea0c90b3"
+            ]
+        ]
+    },
+    {
+        "id": "4aa90349d39ff313",
+        "type": "http in",
+        "z": "6a64cb73d9f17246",
+        "name": "backupSource",
+        "url": "/kuwanaBackup",
+        "method": "post",
+        "upload": false,
+        "swaggerDoc": "",
+        "x": 150,
+        "y": 1160,
+        "wires": [
+            [
+                "bec1bfe3c1e2e033"
+            ]
+        ]
+    },
+    {
+        "id": "1f3330aa57342b27",
+        "type": "inject",
+        "z": "6a64cb73d9f17246",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payloadType": "date",
+        "x": 160,
+        "y": 1100,
+        "wires": [
+            [
+                "b666e5173acc741c"
+            ]
+        ]
+    },
+    {
+        "id": "b666e5173acc741c",
+        "type": "http request",
+        "z": "6a64cb73d9f17246",
+        "name": "",
+        "method": "GET",
+        "ret": "txt",
+        "paytoqs": "body",
+        "url": "http://44.242.120.214:3080/kuwanaBackup",
+        "tls": "",
+        "persist": false,
+        "proxy": "",
+        "authType": "",
+        "senderr": false,
+        "x": 330,
+        "y": 1100,
+        "wires": [
+            [
+                "11479495eb30da30"
+            ]
+        ]
+    },
+    {
+        "id": "bec1bfe3c1e2e033",
+        "type": "debug",
+        "z": "6a64cb73d9f17246",
+        "name": "",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 310,
+        "y": 1160,
+        "wires": []
+    },
+    {
+        "id": "11479495eb30da30",
+        "type": "http response",
+        "z": "6a64cb73d9f17246",
+        "name": "",
+        "statusCode": "",
+        "headers": {},
+        "x": 510,
+        "y": 1100,
+        "wires": []
+    },
+    {
+        "id": "14d52f44d85bf9a0",
+        "type": "inject",
+        "z": "b001e7bcff4690d6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 320,
+        "wires": [
+            [
+                "7e7916b6543c8de0"
+            ]
+        ]
+    },
+    {
+        "id": "7e7916b6543c8de0",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "AlarmEnd",
+        "func": "var newPayload = [];\nif (context.global.AlarmEventEnd.length>0)\n{\n    msg.payload = context.global.AlarmEventEnd;\n    return msg;  \n}\n\n\n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 300,
+        "y": 320,
+        "wires": [
+            [
+                "47d4704fe59c3858",
+                "a3f6c35e163b579e"
+            ]
+        ]
+    },
+    {
+        "id": "ad87d90a17e3db04",
+        "type": "mongodb in",
+        "z": "b001e7bcff4690d6",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "QuerryAE",
+        "collection": "alarmevent",
+        "operation": "find",
+        "x": 880,
+        "y": 320,
+        "wires": [
+            [
+                "bcceac30d7bd6aea"
+            ]
+        ]
+    },
+    {
+        "id": "824e3d34eea769aa",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "repeat1",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 240,
+        "wires": [
+            [
+                "47d4704fe59c3858"
+            ]
+        ]
+    },
+    {
+        "id": "47d4704fe59c3858",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "Iteration1",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 500,
+        "y": 320,
+        "wires": [
+            [
+                "824e3d34eea769aa",
+                "b69a38ef7c74aae7"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "b69a38ef7c74aae7",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "QueryAlarm",
+        "func": "msg.endtime = msg.payload.eTime\nmsg.payload = { name: msg.payload.name, alarm: msg.payload.alarm, bit: msg.payload.bit,  stat:\"active\"}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 320,
+        "wires": [
+            [
+                "ad87d90a17e3db04"
+            ]
+        ]
+    },
+    {
+        "id": "a3f6c35e163b579e",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "ClearAlarmEvent",
+        "func": "context.global.AlarmEventEnd=[];",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 510,
+        "y": 380,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "bcceac30d7bd6aea",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "ackAlarm",
+        "func": "delete msg.iState;\nif (msg.payload.length>0)\n{\n    var alarmRT     = msg.payload[0];\n    var newPayload \t= [];\n    var newquery \t= [];\n    \n    alarmRT.eTime = msg.endtime;\n    alarmRT.stat = \"return\";\n    alarmRT.valueE = msg.valueE;\n    \n    newquery.push({_id :  alarmRT._id});   \n    newPayload.push(alarmRT);\n    \n    if (newquery.length>0)\n    {\n        msg.query  = newquery;\n        msg.payload = newPayload;\n        return msg;\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1040,
+        "y": 320,
+        "wires": [
+            [
+                "0a1a9f6184ffadd8"
+            ]
+        ]
+    },
+    {
+        "id": "f2689bf871a2fa24",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "repeat1",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1200,
+        "y": 240,
+        "wires": [
+            [
+                "0a1a9f6184ffadd8"
+            ]
+        ]
+    },
+    {
+        "id": "0a1a9f6184ffadd8",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "Iteration1",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1200,
+        "y": 320,
+        "wires": [
+            [
+                "f2689bf871a2fa24",
+                "07171f2545fcd7fb",
+                "2e0d94c0bc83bb2e"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "07171f2545fcd7fb",
+        "type": "mongodb out",
+        "z": "b001e7bcff4690d6",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "alarmevent",
+        "collection": "alarmevent",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 1410,
+        "y": 320,
+        "wires": []
+    },
+    {
+        "id": "e6fdbcf2f880b619",
+        "type": "inject",
+        "z": "b001e7bcff4690d6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 540,
+        "wires": [
+            [
+                "6e81d5619a6052f6"
+            ]
+        ]
+    },
+    {
+        "id": "6e81d5619a6052f6",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "AlarmCheck",
+        "func": "var newPayload = [];\n\n    if (context.global.AlarmEventCheck.length>0)\n    {\n        msg.payload = context.global.AlarmEventCheck;\n        return msg;  \n    }\n\n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 540,
+        "wires": [
+            [
+                "e11d02fe94dac3b6",
+                "ce121456a2aefcc6"
+            ]
+        ]
+    },
+    {
+        "id": "3f37d21dab961d95",
+        "type": "mongodb in",
+        "z": "b001e7bcff4690d6",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "QuerryAE",
+        "collection": "alarmevent",
+        "operation": "find",
+        "x": 880,
+        "y": 540,
+        "wires": [
+            [
+                "48ca587d27092224"
+            ]
+        ]
+    },
+    {
+        "id": "fb6aa4b94c773ee9",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "repeat1",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 500,
+        "y": 460,
+        "wires": [
+            [
+                "ce121456a2aefcc6"
+            ]
+        ]
+    },
+    {
+        "id": "ce121456a2aefcc6",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "Iteration1",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 500,
+        "y": 540,
+        "wires": [
+            [
+                "fb6aa4b94c773ee9",
+                "5781949e456ab1ed",
+                "6d011415492c2d51"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "5781949e456ab1ed",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "QueryAlarm",
+        "func": "msg.index = msg.payload.index\nmsg.objId = msg.payload.objId\nmsg.alarm = msg.payload.alarm\nmsg.bit = msg.payload.bit\nmsg.payload = { name:msg.payload.name, alarm:msg.payload.alarm, stat:\"active\"}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 690,
+        "y": 540,
+        "wires": [
+            [
+                "3f37d21dab961d95"
+            ]
+        ]
+    },
+    {
+        "id": "e11d02fe94dac3b6",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "ClearAlarmEventCheck",
+        "func": "context.global.AlarmEventCheck=[];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 640,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "cbcffc4818a07c85",
+        "type": "inject",
+        "z": "b001e7bcff4690d6",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 130,
+        "y": 100,
+        "wires": [
+            [
+                "07703925f2bf3dd0"
+            ]
+        ]
+    },
+    {
+        "id": "07703925f2bf3dd0",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "AlarmStart",
+        "func": "var newPayload = [];\nif (context.global.AlarmEventStart.length>0)\n{\n    msg.payload = context.global.AlarmEventStart;\n    return msg;  \n}\n\n\n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 100,
+        "wires": [
+            [
+                "296eb545874f17f8",
+                "b2ddc5411a1bac4e",
+                "8db19969659afb5b"
+            ]
+        ]
+    },
+    {
+        "id": "296eb545874f17f8",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "ClearAlarmEvent",
+        "func": "context.global.AlarmEventStart=[];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 140,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b2ddc5411a1bac4e",
+        "type": "mongodb out",
+        "z": "b001e7bcff4690d6",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "alarmevent",
+        "collection": "alarmevent",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 510,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "2e0d94c0bc83bb2e",
+        "type": "debug",
+        "z": "b001e7bcff4690d6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1210,
+        "y": 440,
+        "wires": []
+    },
+    {
+        "id": "6d011415492c2d51",
+        "type": "debug",
+        "z": "b001e7bcff4690d6",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 1030,
+        "y": 660,
+        "wires": []
+    },
+    {
+        "id": "48ca587d27092224",
+        "type": "function",
+        "z": "b001e7bcff4690d6",
+        "name": "ackAlarmObjs",
+        "func": "delete msg.iState;\nif (msg.payload.length > 0) {\n}\nelse\n{\n\n    var arrayAlarmVSD = [2, 4, 8];\n    var arrayAlarmValve = [2, 4, 8];\n    var arrayAlarmWEI = [2, 4, 8, 256]\n\n    for (var i = 0; i < context.global.myPLC.length; i++) {\n        for (var j = 4; j < context.global.myPLC[i].length; j++) {\n            if (context.global.myPLC[i][j].length > 0) {\n                for (var k = 1; k < context.global.myPLC[i][j].length; k++) {\n                    if (context.global.myPLC[i][j][k]._id === msg.objId)\n                    {\n                        switch (context.global.myPLC[i][j][k].typeData)\n                        {\n                            case \"Weighing\":\n                                context.global.myPLC[i][j][k].attribute.VALUE[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - arrayAlarmWEI[msg.bit]);\n                                break;\n                            case \"VSD\": \n                                context.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - arrayAlarmVSD[msg.bit]);\n                                break;\n                            case \"Valve\":\n                                context.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - arrayAlarmValve[msg.bit]);\n                                break;\n                            case \"ELECTRIC\":\n                                context.global.myPLC[i][j][k].attribute.ETAT[1] = 0\n                                break; \n                        }\n                    }\n            \n                }\n            }\n        }\n    }\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 540,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "8db19969659afb5b",
+        "type": "debug",
+        "z": "b001e7bcff4690d6",
+        "name": "debug 9",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 780,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "3f00d2979010a73a",
+        "type": "inject",
+        "z": "8187cb28702fd891",
+        "name": "",
+        "props": [
+            {
+                "p": "payload",
+                "v": "",
+                "vt": "date"
+            },
+            {
+                "p": "topic",
+                "v": "",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 170,
+        "y": 400,
+        "wires": [
+            [
+                "e517db46c14914aa"
+            ]
+        ]
+    },
+    {
+        "id": "e517db46c14914aa",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "BEnd",
+        "func": "var newPayload = [];\nif (context.global.BEventEnd.length>0)\n{\n    msg.payload = context.global.BEventEnd;\n    return msg;  \n}\n\n\n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 330,
+        "y": 400,
+        "wires": [
+            [
+                "b3a4c4516e1b9b37",
+                "2c3267a60b03c1a8"
+            ]
+        ]
+    },
+    {
+        "id": "8e318a55fab534b0",
+        "type": "mongodb in",
+        "z": "8187cb28702fd891",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "QuerryBE",
+        "collection": "biomasevent",
+        "operation": "find",
+        "x": 920,
+        "y": 400,
+        "wires": [
+            [
+                "d1e882e38630b864"
+            ]
+        ]
+    },
+    {
+        "id": "96feb79372fb5da5",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "repeat1",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 540,
+        "y": 320,
+        "wires": [
+            [
+                "b3a4c4516e1b9b37"
+            ]
+        ]
+    },
+    {
+        "id": "b3a4c4516e1b9b37",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "Iteration1",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 540,
+        "y": 400,
+        "wires": [
+            [
+                "96feb79372fb5da5",
+                "827fda3271593c4d"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "827fda3271593c4d",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "QueryAlarm",
+        "func": "msg.endtime = msg.payload.eTime\nmsg.valueE = msg.payload.valueE\nmsg.payload = { name: msg.payload.name, stat:\"active\"}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 730,
+        "y": 400,
+        "wires": [
+            [
+                "8e318a55fab534b0"
+            ]
+        ]
+    },
+    {
+        "id": "2c3267a60b03c1a8",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "ClearBEvent",
+        "func": "context.global.BEventEnd=[];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 460,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "d1e882e38630b864",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "ackB",
+        "func": "delete msg.iState;\nif (msg.payload.length>0)\n{\n    var alarmRT     = msg.payload[0];\n    var newPayload \t= [];\n    var newquery \t= [];\n    \n    alarmRT.eTime = msg.endtime;\n    alarmRT.stat = \"return\";\n    alarmRT.valueE = msg.valueE;\n    \n    newquery.push({_id :  alarmRT._id});   \n    newPayload.push(alarmRT);\n    \n    if (newquery.length>0)\n    {\n        msg.query  = newquery;\n        msg.payload = newPayload;\n        return msg;\n    }\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1070,
+        "y": 400,
+        "wires": [
+            [
+                "e29c61384fcee964"
+            ]
+        ]
+    },
+    {
+        "id": "b078f464881cf061",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "repeat1",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1240,
+        "y": 320,
+        "wires": [
+            [
+                "e29c61384fcee964"
+            ]
+        ]
+    },
+    {
+        "id": "e29c61384fcee964",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "Iteration1",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 1240,
+        "y": 400,
+        "wires": [
+            [
+                "b078f464881cf061",
+                "540056c2dfa6ea5f"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "cc5e9ecd0f3892c9",
+        "type": "inject",
+        "z": "8187cb28702fd891",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "5",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 620,
+        "wires": [
+            [
+                "3fe6c70531182762"
+            ]
+        ]
+    },
+    {
+        "id": "3fe6c70531182762",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "BCheck",
+        "func": "var newPayload = [];\n\nif (context.global.BEventEnd.length>0)\n    {\n    msg.payload = context.global.BEventEnd;\n        return msg;  \n    }\n\n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 320,
+        "y": 620,
+        "wires": [
+            [
+                "919be090dc8fc19b",
+                "42a221998ec50b59"
+            ]
+        ]
+    },
+    {
+        "id": "13ade75b20a0f27f",
+        "type": "mongodb in",
+        "z": "8187cb28702fd891",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "QuerryBE",
+        "collection": "biomasevent",
+        "operation": "find",
+        "x": 900,
+        "y": 620,
+        "wires": [
+            [
+                "df7738e8d22cf8bc"
+            ]
+        ]
+    },
+    {
+        "id": "fba38de6732541ea",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "repeat1",
+        "func": "msg.payload = msg.payload;\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 520,
+        "y": 540,
+        "wires": [
+            [
+                "42a221998ec50b59"
+            ]
+        ]
+    },
+    {
+        "id": "42a221998ec50b59",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "Iteration1",
+        "func": "var currentMsg = null, outMessage = null;\n  var iState = msg.iState;\n  if (!iState) {\n     // we received an initial message\n     // if the message is not an array, make it one\n     //if( Object.prototype.toString.call(msg.payload) !== ‘[object Array]’ ) {\n     //      msg.payload = [msg.payload];\n     //}\n     iState = {};\n     iState.index = 0;\n     iState.inArray = msg.payload;\n     //iState.inArray1 = msg.query;\n     iState.outArray = [];\n     //iState.outArray1 = [];\n     msg.iState = iState\n   } else {\n    // save results from the last iteration\n     iState.outArray.push(msg.payload)\n     //iState.outArray1.push(msg.query)\n }\n  //If there are still objects left to iterate goto the next one in the original array\n  if (iState.index < iState.inArray.length) {\n    currentMsg = msg;\n    msg.payload = iState.inArray[iState.index];\n    //msg.query = iState.inArray1[iState.index];\n    \n  } else {\n    currentMsg = null;\n    outMessage = msg;\n    msg.payload = iState.outArray;\n    //msg.query = iState.outArray1;\n    delete msg.iState;\n}\n\niState.index ++;\nreturn [currentMsg, outMessage];",
+        "outputs": 2,
+        "noerr": 0,
+        "x": 520,
+        "y": 620,
+        "wires": [
+            [
+                "fba38de6732541ea",
+                "20ff99d9076787a1"
+            ],
+            []
+        ]
+    },
+    {
+        "id": "20ff99d9076787a1",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "QueryAlarm",
+        "func": "msg.index = msg.payload.index\nmsg.objId = msg.payload.objId\nmsg.alarm = msg.payload.alarm\nmsg.bit = msg.payload.bit\nmsg.payload = { name:msg.payload.name, stat:\"active\"}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 710,
+        "y": 620,
+        "wires": [
+            [
+                "13ade75b20a0f27f"
+            ]
+        ]
+    },
+    {
+        "id": "919be090dc8fc19b",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "ClearBEventCheck",
+        "func": "context.global.BEventCheck=[];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 720,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "805f0fd0b8e41349",
+        "type": "inject",
+        "z": "8187cb28702fd891",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 180,
+        "wires": [
+            [
+                "b3d1b1ab15b7f025"
+            ]
+        ]
+    },
+    {
+        "id": "b3d1b1ab15b7f025",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "BStart",
+        "func": "var newPayload = [];\nif (context.global.BEventStart.length>0)\n{\n    msg.payload = context.global.BEventStart;\n    return msg;  \n}\n\n\n ",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 310,
+        "y": 180,
+        "wires": [
+            [
+                "0c30bf99f181c78e",
+                "5aa24f6db7b63def",
+                "256ced3a6c3475ed"
+            ]
+        ]
+    },
+    {
+        "id": "0c30bf99f181c78e",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "ClearBEvent",
+        "func": "context.global.BEventStart=[];",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 530,
+        "y": 220,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "5aa24f6db7b63def",
+        "type": "mongodb out",
+        "z": "8187cb28702fd891",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "biomasevent",
+        "collection": "biomasevent",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "insert",
+        "x": 530,
+        "y": 140,
+        "wires": []
+    },
+    {
+        "id": "df7738e8d22cf8bc",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "ackBObjs",
+        "func": "delete msg.iState;\nif (msg.payload.length > 0) {\n    //\n}\nelse\n{\n\n    for (var i = 0; i < context.global.myPLC.length; i++) {\n        for (var j = 4; j < context.global.myPLC[i].length; j++) {\n            if (context.global.myPLC[i][j].length > 0) {\n                for (var k = 1; k < context.global.myPLC[i][j].length; k++) {\n                    if (context.global.myPLC[i][j][k]._id === msg.objId)\n                    {\n                        switch (context.global.myPLC[i][j][k].tagName)\n                        {\n                            case \"Weighing1\":\n                            case \"Weighing2\":\n                                context.global.myPLC[i][j][k].attribute.ETAT[1] = context.global.myPLC[i][j][k].attribute.ETAT[1] & (0xFFFF - 2048);\n                                break;\n                        }\n                    }\n            \n                }\n            }\n        }\n    }\n\n}",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 1060,
+        "y": 620,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "256ced3a6c3475ed",
+        "type": "debug",
+        "z": "8187cb28702fd891",
+        "name": "debug 11",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 260,
+        "wires": []
+    },
+    {
+        "id": "540056c2dfa6ea5f",
+        "type": "mongodb out",
+        "z": "8187cb28702fd891",
+        "mongodb": "bfa28f3045a482a9",
+        "name": "biomasevent",
+        "collection": "biomasevent",
+        "payonly": true,
+        "upsert": false,
+        "multi": false,
+        "operation": "store",
+        "x": 1450,
+        "y": 400,
+        "wires": []
+    },
+    {
+        "id": "ac315b4915cb6d23",
+        "type": "inject",
+        "z": "8187cb28702fd891",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "1",
+        "crontab": "",
+        "once": true,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 150,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "f383a4a4787eaaf5",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "findTagName",
+        "func": "msg.payload = { \"tagName\": { $in: [\"Weighing1_FILLING\", \"Weighing2_FILLING\", \"Weighing1_Value\",\"Weighing2_Value\"] } }\nreturn msg;\n\n",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 350,
+        "y": 60,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "2757dba835ae137a",
+        "type": "function",
+        "z": "8187cb28702fd891",
+        "name": "function 1",
+        "func": "msg.LoaderSensor01 = msg.payload.filter(function (tags) {\n    return (tags.tagName == \"Weighing1_FILLING\")\n});\n\nmsg.LoaderSensor02 = msg.payload.filter(function (tags) {\n    return (tags.tagName == \"Weighing2_FILLING\")\n});\n\nmsg.Weighing1_Value = msg.payload.filter(function (tags) {\n    return (tags.tagName == \"Weighing1_Value\")\n});\n\nmsg.Weighing2_Value = msg.payload.filter(function (tags) {\n    return (tags.tagName == \"Weighing2_Value\")\n});\n\nvar currentTime = new Date();\ncurrentTime = Number(currentTime.getTime());\n\nif ((msg.LoaderSensor01[0].attribute.VALUE[0] === 1) && (msg.LoaderSensor01[0].attribute.VALUE[1] === 0)) {\n    msg.LoaderSensor01[0].attribute.VALUE[1] = 1\n    context.global.BEventStart.push({\n        objId: msg.LoaderSensor01[0]._id,\n        name: \"Bộ cân 01\",\n        valueS: msg.Weighing1_Value[0].attribute.VALUE[0],\n        stat: \"active\",\n        alarm: \"LoaderSensor\",\n        sTime: currentTime,\n        eTime: 0,\n    })\n} else if ((msg.LoaderSensor01[0].attribute.VALUE[0] === 0) && (msg.LoaderSensor01[0].attribute.VALUE[1] === 1)) {\n    msg.LoaderSensor01[0].attribute.VALUE[1] = 0\n    context.global.BEventEnd.push({\n        objId: msg.LoaderSensor01[0]._id,\n        valueE: msg.Weighing1_Value[0].attribute.VALUE[0],\n        name: \"Bộ cân 01\",\n        eTime: currentTime,\n    })\n} else if ((msg.LoaderSensor01[0].attribute.VALUE[0] === 1) && (msg.LoaderSensor01[0].attribute.VALUE[1] === 1)) {\n    context.global.BEventCheck.push({\n        objId: msg.LoaderSensor01[0]._id,\n        name: \"Bộ cân 01\",\n    })\n}\n\nif ((msg.LoaderSensor02[0].attribute.VALUE[0] === 1) && (msg.LoaderSensor02[0].attribute.VALUE[1] === 0)) {\n    msg.LoaderSensor02[0].attribute.VALUE[1] = 1\n    context.global.BEventStart.push({\n        objId: msg.LoaderSensor02[0]._id,\n        name: \"Bộ cân 02\",\n        valueS: msg.Weighing2_Value[0].attribute.VALUE[0],\n        stat: \"active\",\n        alarm: \"LoaderSensor\",\n        sTime: currentTime,\n        eTime: 0,\n    })\n} else if ((msg.LoaderSensor02[0].attribute.VALUE[0] === 0) && (msg.LoaderSensor02[0].attribute.VALUE[1] === 1)) {\n    msg.LoaderSensor02[0].attribute.VALUE[1] = 0\n    context.global.BEventEnd.push({\n        objId: msg.LoaderSensor02[0]._id,\n        valueE: msg.Weighing2_Value[0].attribute.VALUE[0],\n        name: \"Bộ cân 02\",\n        eTime: currentTime,\n    })\n} else if ((msg.LoaderSensor02[0].attribute.VALUE[0] === 1) && (msg.LoaderSensor02[0].attribute.VALUE[1] === 1)) {\n    context.global.BEventCheck.push({\n        objId: msg.LoaderSensor02[0]._id,\n        name: \"Bộ cân 02\",\n    })\n}\n\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 560,
+        "y": 60,
+        "wires": [
+            [
+                "cd1c0e584b6b9be8"
+            ]
+        ]
+    },
+    {
+        "id": "cd1c0e584b6b9be8",
+        "type": "debug",
+        "z": "8187cb28702fd891",
+        "name": "debug 12",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 800,
+        "y": 60,
+        "wires": []
+    },
+    {
+        "id": "499e802bba563b73",
+        "type": "tcp in",
+        "z": "bff4c05cb8facc83",
+        "name": "",
+        "server": "client",
+        "host": "192.168.1.250",
+        "port": "5555",
+        "datamode": "stream",
+        "datatype": "utf8",
+        "newline": "",
+        "topic": "",
+        "base64": false,
+        "tls": "",
+        "x": 440,
+        "y": 180,
+        "wires": [
+            [
+                "a062af642c4ab466",
+                "8b8c2017a74a3487"
+            ]
+        ]
+    },
+    {
+        "id": "a062af642c4ab466",
+        "type": "debug",
+        "z": "bff4c05cb8facc83",
+        "name": "",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 690,
+        "y": 180,
+        "wires": []
+    },
+    {
+        "id": "8b8c2017a74a3487",
+        "type": "function",
+        "z": "bff4c05cb8facc83",
+        "name": "",
+        "func": "var s = msg.payload;\nif (s.indexOf(\"COM\") < 0) return null;\nvar port = 0;\nvar topic = \"\";\nif (s.indexOf(\"COM1:\") >= 0)\n{\n    port = 1;\n    topic = \"CAN1\";\n}\nelse if (s.indexOf(\"COM2:\") >= 0)\n{\n    port = 2;\n    topic = \"CAN2\";\n}\nelse return null;\nif (s.indexOf(\"kg\") < 0) return null;\nvar idx = s.indexOf(\"+\");\nvar isNegative = false;\nif (idx < 0)\n{\n    idx = s.indexOf(\"-\");\n    if (idx < 0) return null;\n    isNegative = true;\n}\nvar old_value = flow.get(topic);\nif (typeof old_value === \"undefined\") old_value = 0;\nidx += 2;\nvar strvalue = s.substring(idx);\nvar value = parseInt(strvalue);\nif (isNegative) value = -value;\nvar diff = Math.abs(old_value - value);\nflow.set(topic,value);\nif (diff > 20) return null;\nmsg.payload = value;\nmsg.topic = topic;\nif (port == 1) return [msg,null];\nelse return [null,msg];",
+        "outputs": 2,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 400,
+        "y": 300,
+        "wires": [
+            [
+                "7f816f40cc869e44",
+                "b923eaae9b92a68e"
+            ],
+            [
+                "7f816f40cc869e44",
+                "c07d2f112d94d5b3"
+            ]
+        ]
+    },
+    {
+        "id": "7f816f40cc869e44",
+        "type": "function",
+        "z": "bff4c05cb8facc83",
+        "name": "write to plc",
+        "func": "var value = msg.payload;\nif (msg.topic == \"CAN1\") msg.address = \"D4\";\nelse if (msg.topic == \"CAN2\") msg.address = \"D6\";\nelse return null;\nvar last_write = flow.get(msg.topic + \"_last_write\");\nif (typeof last_write === \"undefined\") last_write = {ts: 0, value: 0};\nvar currentTime = new Date();\nvar ts = currentTime.getTime()/1000;\nif (last_write.value == value && (ts - last_write.ts) < 5) return null;\nmsg.value = new Array();\nvar f32 = new Float32Array(1);\nf32[0] = Number(value);\nvar ui16 = new Uint16Array(f32.buffer);\nmsg.value[0] = ui16[0];\nmsg.value[1] = ui16[1];\nlast_write.ts = ts;\nlast_write.value = value;\nflow.set(msg.topic + \"_last_write\",last_write);\nnode.send(msg);\n//Clear error count\nif (msg.topic == \"CAN1\") msg.address = \"D1008\";\nelse if (msg.topic == \"CAN2\") msg.address = \"D1009\";\nmsg.value = 0;\nnode.send(msg);\n//Set Comm OK bit\nif (msg.topic == \"CAN1\") msg.address = \"W0.03\";\nelse if (msg.topic == \"CAN2\") msg.address = \"W0.04\";\nmsg.value = true;\nnode.send(msg);\nreturn null;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 390,
+        "y": 460,
+        "wires": [
+            [
+                "6d85941046f5886f",
+                "245f6ad64e3d468c"
+            ]
+        ]
+    },
+    {
+        "id": "6d85941046f5886f",
+        "type": "debug",
+        "z": "bff4c05cb8facc83",
+        "name": "debug 14",
+        "active": false,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "true",
+        "targetType": "full",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 600,
+        "y": 460,
+        "wires": []
+    },
+    {
+        "id": "245f6ad64e3d468c",
+        "type": "link out",
+        "z": "bff4c05cb8facc83",
+        "name": "toPLC",
+        "mode": "link",
+        "links": [
+            "3fe7d440a469dba3"
+        ],
+        "x": 555,
+        "y": 520,
+        "wires": []
+    },
+    {
+        "id": "b923eaae9b92a68e",
+        "type": "function",
+        "z": "bff4c05cb8facc83",
+        "name": "Can1",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: msg.payload + \"kg\"});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 280,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "c07d2f112d94d5b3",
+        "type": "function",
+        "z": "bff4c05cb8facc83",
+        "name": "Can2",
+        "func": "node.status({ fill: \"green\", shape: \"dot\", text: msg.payload + \"kg\"});\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "initialize": "",
+        "finalize": "",
+        "libs": [],
+        "x": 610,
+        "y": 340,
+        "wires": [
+            []
+        ]
+    },
+    {
+        "id": "b4db9f33ed015bdb",
+        "type": "inject",
+        "z": "bff4c05cb8facc83",
+        "name": "",
+        "props": [
+            {
+                "p": "payload"
+            },
+            {
+                "p": "topic",
+                "vt": "str"
+            }
+        ],
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "onceDelay": 0.1,
+        "topic": "",
+        "payload": "",
+        "payloadType": "date",
+        "x": 320,
+        "y": 620,
+        "wires": [
+            [
+                "3b2160c93be18a13"
+            ]
+        ]
+    },
+    {
+        "id": "3b2160c93be18a13",
+        "type": "debug",
+        "z": "bff4c05cb8facc83",
+        "name": "debug 15",
+        "active": true,
+        "tosidebar": true,
+        "console": false,
+        "tostatus": false,
+        "complete": "false",
+        "statusVal": "",
+        "statusType": "auto",
+        "x": 540,
+        "y": 620,
+        "wires": []
+    }
+]
