@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "NSCADA",
+      "env": {
+        "ROOT_URL": "http://127.0.0.1:3020",
+        "PORT": "3020",
+        "MONGO_URL": "mongodb://mydbs:Kipy9Q5w@127.0.0.1:27017/meteor?replicaSet=rs0",
+        "MONGO_OPLOG_URL": "mongodb://127.0.0.1:27017/local?replicaSet=rs0",
+        "METEOR_SETTINGS": {}
+      },
+      "script": "/home/myowner/myapp/NSCADA/bundle/main.js",
+      "exec_mode": "cluster_mode",
+      "instances": 1
+    }
+  ]
+}
