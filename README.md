@@ -12,11 +12,5 @@ D. Cài đặt môi trường
 - Copy file script InstallTool.sh vào thư mục script
 - Chạy lện bash InstallTool.sh
 
-E. Cấu hình node-red
-- Mở ứng dụng node-red băng trình duyệt web: xxx.xxx.xxx.xxx:1880  (xxx.xxx.xxx.xxx: là địa chỉ máy tính Ubuntu)
-- Import file cấu hình  NodeRedFlow.json  
-- Cấu hình lại địa chỉ PLC mới
-- Cấu hình lại thông tin user và pass của database với tài khoản: user "mydbs" -password "Kipy9Q5w"
-
-F. Chạy ứng dụng SCADA
+E. Chạy ứng dụng SCADA
 - Chạy ứng dụng SCADA băng trình duyệt web: xxx.xxx.xxx.xxx:3020  (xxx.xxx.xxx.xxx: là địa chỉ máy tính Ubuntu)
