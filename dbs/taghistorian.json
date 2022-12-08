@@ -1,0 +1,4 @@
+{"_id":"8aDGsuHaK7wStyXYx","site":"Ai73SWbFDLPAMeXh7","assignmentTag":"Weighing1_Value.VALUE","typeReport":"2","desc":"Bộ cân 1","axisid":"Khối lượng (kg)","scale":1,"typeHist":"plant","datachange":1,"uniqueID":1}
+{"_id":"9SYiRzwh5tWk7Aejy","site":"Ai73SWbFDLPAMeXh7","assignmentTag":"Weighing2_Value.VALUE","typeReport":"2","desc":"Bộ cân 2","axisid":"Khối lượng (kg)","scale":1,"typeHist":"plant","datachange":1,"uniqueID":2}
+{"_id":"CRxg3hqGL7hdaBPDq","site":"Ai73SWbFDLPAMeXh7","assignmentTag":"MATERIAL_SELECT.VALUE","typeReport":"2","desc":"material","axisid":"Khối lượng (kg)","scale":1,"typeHist":"plant","datachange":1,"uniqueID":3}
+{"_id":"a9dm8mcunyZLKE97p","site":"Ai73SWbFDLPAMeXh7","assignmentTag":"BOILER_SELECT.VALUE","typeReport":"2","desc":"Lò","axisid":"Khối lượng (kg)","scale":1,"typeHist":"plant","datachange":1,"uniqueID":4}
