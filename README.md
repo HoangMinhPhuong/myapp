@@ -14,3 +14,6 @@ D. Cài đặt môi trường
 
 E. Chạy ứng dụng SCADA
 - Chạy ứng dụng SCADA băng trình duyệt web: xxx.xxx.xxx.xxx:3020  (xxx.xxx.xxx.xxx: là địa chỉ máy tính Ubuntu)
+
+sudo chmod +x InstallTool.sh
+sudo chmod +x mongo-script.sh
