@@ -40,7 +40,7 @@ tar -xvzf bundle.tar.gz
 tar -xvzf /home/myowner/myapp/NSCADA/node_modules.tar.gz -C /home/myowner/myapp/NSCADA/bundle/programs/server
 cd 
 nvm use v12
-echo "===============Download app"
+echo "===============Initial Mongodb"
 cd
 nvm use v12
 echo "===============Create admin account"
@@ -88,4 +88,5 @@ EOF
 sudo service mongod status <<EOF   
 EOF
 wait
+bash /home/myowner/data/./runApp.sh
 echo "Doing some more Bash script work afterwards"
