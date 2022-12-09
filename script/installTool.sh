@@ -76,7 +76,7 @@ db.createUser(
 )
 EOF
 echo "===============conf01/mongod.conf "
-sudo cp /home/myowner/myapp/dbs/conf01/mongod.conf  /etc/ <<EOF  
+sudo cp /home/myowner/myapp/database/conf01/mongod.conf  /etc/ <<EOF  
 EOF
  
 sudo service mongod stop <<EOF   
@@ -88,5 +88,4 @@ EOF
 sudo service mongod status <<EOF   
 EOF
 wait
-bash /home/myowner/data/./runApp.sh
 echo "Doing some more Bash script work afterwards"

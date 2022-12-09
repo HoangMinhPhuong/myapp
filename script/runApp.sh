@@ -11,7 +11,7 @@ rs.initiate( {
 })
 EOF
 
-echo "===============conf02/mongod.conf "
+echo "===============database/mongod.conf "
 sudo cp /home/myowner/myapp/database/conf02/mongod.conf  /etc/ <<EOF   
 EOF
 sudo service mongod stop <<EOF   
